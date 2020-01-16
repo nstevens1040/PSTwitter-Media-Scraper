@@ -42,8 +42,9 @@
 7.  Right click on the bookmark and select **edit**. In the dialog that follows, feel free to name the bookmark whatever you'd like.
 8.  In the **URL** field, delete the current value and paste the javascript below:  
 
+```sh
     javascript: if (typeof tweets === "undefined") { var tweets = []; }; function scrollit() { var z = document.body.getElementsByTagName("A"); for(var i = 0; i < z.length; i++){ var current = z[i]; if(current.classList.length == 13){ tweets.push(current.href); } } document.scrollingElement.scrollBy(0, 500); }; if (!document.onscroll) { document.onscroll = function () { setTimeout(function(){ scrollit();},500); } }; scrollit(); if ((document.scrollingElement.scrollHeight - 2000) < document.scrollingElement.scrollTop) { document.onscroll = ''; uniq = [...new Set(tweets)]; var list = uniq.join(',').replace(/,/g, "\n"); var ta = document.createElement("textarea"); ta.id = "neek"; ta.value = list; document.body.appendChild(ta); var t = document.getElementById("neek"); t.select(); document.execCommand("copy");};
-
+```
 9.  Now navigate back to the twitter page that you'd like to pull all of the links to inidividual tweets from.
 10.  I usually refresh the page.
 11.  Now click on the bookmark that you just created. The page should start to scroll on it's own.
