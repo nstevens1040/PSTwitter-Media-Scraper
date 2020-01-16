@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8"/>
+        <style>
+            body {
+                font-family: Consolas;
+            }
+            h1 {
+                text-decoration: underline;
+            }
+            h2 {
+                text-decoration: underline;
+                font-size: 18px;
+            }
+            pre {
+                background: #f4f4f4;
+                border: 1px solid #ddd;
+                border-left: 3px solid #f36d33;
+                color: #667;
+                page-break-inside: avoid;
+                font-family: monospace;
+                font-size: 15px;
+                line-height: 1.6;
+                margin-bottom: 10px;
+                overflow: auto;
+                padding: 10px 10px;
+                display: block;
+                word-wrap: break-word;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Requirements</h1>
+        <ol>
+                <li>Windows OS ==> Internet Explorer and PowerShell</li>
+                <li>Google Chrome</li>
+                <li>FFMPEG</li>
+                <li>A Twitter account (username and password)</li>
+                <li>Twitter Bearer Token</li>
+                <li>A list of links to individial tweets</li>
+                <h2>    Retrieving your Bearer Token</h2>
+                <ol>
+                    <li> Launch Google Chrome</li>
+                    <li> Hold CTRL+SHIFT and strike N to launch a new window in <b>Incognito Mode</b>.</li>
+                    <li> Strike F12 to open developer tools and then click on the <b>Network</b> tab.</li>
+                    <li> Back in your Incognito window, navigate to <a href="https://twitter.com">https://twitter.com</a> and login.</li>
+                    <li> Go back to the <b>Network</b> tab in developer tools and type <b>api.twitter.com/2</b> into the search field up top.</li>
+                    <li> For this example, I'm using the request made to the url below.<br><pre>https://api.twitter.com/2/timeline/home.json?include_profile_interstitial_type=1&include_blocking=1&include_blocked_by=1&include_followed_by=1&include_want_retweets=1&include_mute_edge=1&include_can_dm=1&include_can_media_tag=1&skip_status=1&cards_platform=Web-12&include_cards=1&include_composer_source=true&include_ext_alt_text=true&include_reply_count=1&tweet_mode=extended&include_entities=true&include_user_entities=true&include_ext_media_color=true&include_ext_media_availability=true&send_error_codes=true&simple_quoted_tweets=true&earned=1&count=20&lca=true&ext=mediaStats%2CcameraMoment</pre><br/>I believe any one of the requests filtered by <b>api.twitter.com/2</b> will do.</li>
+                    <li> Right click on the request and hover over <b>copy</b>. Then, in the secondary context menu that appears, select <b>copy as powershell.</b></li>
+                    <li> In a new tab, navigate to <a href="https://nanick.hopto.org/iframes/iwrprettyprint.html">https://nanick.hopto.org/iframes/iwrprettyprint.html</a>.</li>
+                    <li> CTRL+V into the text area and then click <b>Format!</b> to pretty print the resulting PowerShell script.</li>
+                    <li> Underneath <b>-Headers @{</b> there should be a webheader named <b>authorization</b> and it should appear like this &darr;.<br/><pre>"authorization"="Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";</pre><br/></li>
+                    <li> In my case, I would save <br/><pre>AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA</pre><br/> in a text file to be used later.</li>
+                </ol>
+                <h2>    Generating a list of tweets</h2>
+                <ol>
+                    <li> Launch a new tab in Google Chrome.</li>
+                    <li> Navigate to <a href="https://twitter.com">https://twitter.com</a> and login. Then navigate to a Twitter page that you'd like to pull all of the tweets from.</li>
+                    <li> Strike CTRL+D to bookmark the page.</li>
+                    <li> Click the three dots on the right. Hover over <b>Bookmarks</b> and make sure that there is a check next to <b>show bookmarks bar</b>.</li>
+                    <li> Launch a new tab and navigate to <a href="chrome://bookmarks/">chrome://bookmarks/</a>.</li>
+                    <li> Find the bookmark that you just created and drag it to the bookmarks bar (underneath the address bar).</li>
+                    <li> Right click on the bookmark and select <b>edit</b>. In the dialog that follows, feel free to name the bookmark whatever you'd like.</li>
+                    <li> In the <b>URL</b> field, delete the current value and paste the javascript below:<br/><pre>javascript: if (typeof tweets === "undefined") { var tweets = []; }; function scrollit() { var z = document.body.getElementsByTagName("A"); for(var i = 0; i < z.length; i++){ var current = z[i]; if(current.classList.length == 13){ tweets.push(current.href); } } document.scrollingElement.scrollBy(0, 500); }; if (!document.onscroll) { document.onscroll = function () { setTimeout(function(){ scrollit();},500); } }; scrollit(); if ((document.scrollingElement.scrollHeight - 2000) < document.scrollingElement.scrollTop) { document.onscroll = ''; uniq = [...new Set(tweets)]; var list = uniq.join(',').replace(/,/g, "\n"); var ta = document.createElement("textarea"); ta.id = "neek"; ta.value = list; document.body.appendChild(ta); var t = document.getElementById("neek"); t.select(); document.execCommand("copy");};</pre><br/></li> 
+                    <li> Now navigate back to the twitter page that you'd like to pull all of the links to inidividual tweets from.</li>
+                    <li> I usually refresh the page.</li>
+                    <li> Now click on the bookmark that you just created. The page should start to scroll on it's own.</li>
+                    <li> Wait until it reaches the very bottom of the page and then click on the bookmark one more time.</li>
+                    <li> Open a text editor (notepad.exe works fine) and CTRL+V.</li>
+                    <li> What you should now see in the text editor is a list of links to each individual tweet on that page. If not, then try clicking the bookmark once more and then try pasting into the text file again.</li>
+                    <li> Save the text file. I usually save it to my Desktop as <b>tweets.txt</b>.</li>
+                </ol>
+        </ol>
+        <p>As far as prerequisites are concerned, that should be everything.</p>
+    </body>
+</html>
