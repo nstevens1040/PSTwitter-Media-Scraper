@@ -26,11 +26,10 @@
 
     <pre>"authorization"="Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";</pre>
 
-11.  In my case, I would save  
+11.  In my case, I would save the value below in a text file to be used later.
 
     <pre>AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA</pre>
 
-    in a text file to be used later.
 
 ## Generating a list of tweets
 
