@@ -14,12 +14,10 @@
 3.  Strike F12 to open developer tools and then click on the **Network** tab.
 4.  Back in your Incognito window, navigate to [https://twitter.com](https://twitter.com) and login.
 5.  Go back to the **Network** tab in developer tools and type **api.twitter.com/2** into the search field up top.
-6.  For this example, I'm using the request made to the url below.
-
+6.  For this example, I'm using the request made to the url below. I believe any one of the requests filtered by **api.twitter.com/2** will do.
 ```sh
 https://api.twitter.com/2/timeline/home.json?include_profile_interstitial_type=1&include_blocking=1&include_blocked_by=1&include_followed_by=1&include_want_retweets=1&include_mute_edge=1&include_can_dm=1&include_can_media_tag=1&skip_status=1&cards_platform=Web-12&include_cards=1&include_composer_source=true&include_ext_alt_text=true&include_reply_count=1&tweet_mode=extended&include_entities=true&include_user_entities=true&include_ext_media_color=true&include_ext_media_availability=true&send_error_codes=true&simple_quoted_tweets=true&earned=1&count=20&lca=true&ext=mediaStats%2CcameraMoment
 ```
-   I believe any one of the requests filtered by **api.twitter.com/2** will do.
 7.  Right click on the request and hover over **copy**. Then, in the secondary context menu that appears, select **copy as powershell.**
 8.  In a new tab, navigate to [https://nanick.hopto.org/iframes/iwrprettyprint.html](https://nanick.hopto.org/iframes/iwrprettyprint.html).
 9.  CTRL+V into the text area and then click **Format!** to pretty print the resulting PowerShell script.
