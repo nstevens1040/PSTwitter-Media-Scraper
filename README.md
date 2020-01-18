@@ -1,4 +1,6 @@
 # Requirements
+[View full featured README as HTML document](https://nanick.hopto.org/IFRAMES/README.html)  
+
 1.  Windows OS ==> Internet Explorer and PowerShell
 2.  Google Chrome
 3.  FFMPEG
