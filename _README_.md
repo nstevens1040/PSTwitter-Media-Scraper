@@ -27,7 +27,7 @@ https://api.twitter.com/2/timeline/home.json?include_profile_interstitial_type=1
 ```ps1
 AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA
 ```
-[https://nanick.hopto.org/IFRAMES/2.mp4](Video demonstration :: retrieving your Bearer token)
+[![Video demonstration :: retrieving your Bearer token][https://nanick.hopto.org/IFRAMES/2.mp4](https://nanick.hopto.org/IFRAMES/2.mp4)
 
 ##     Generating a list of tweets
 
@@ -50,7 +50,8 @@ javascript:function finishClip(){ document.onscroll = ''; uniq = [...new Set(twe
    14.  What you should now see in the text editor is a list of links to each individual tweet on that page. If not, then try clicking the bookmark once more and then try pasting into the text file again.
    15.  Save the text file. I usually save it to my Desktop as **tweets.txt**.
 
-[https://nanick.hopto.org/IFRAMES/_twitorial.mp4](Video demonstration :: Generating a list of links to tweets)  
+[![Video demonstration :: Generating a list of links to tweets][https://nanick.hopto.org/IFRAMES/_twitorial.mp4](https://nanick.hopto.org/IFRAMES/_twitorial.mp4)
+  
 disclaimer: Part of this video is hard coded at 5x the speed at which it was recorded starting from 1 minute and 10 seconds in to 2 minutes and 17 seconds in.
 
 As far as prerequisites are concerned, that should be everything.
