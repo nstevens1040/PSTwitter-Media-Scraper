@@ -50,7 +50,7 @@ javascript:function finishClip(){ document.onscroll = ''; uniq = [...new Set(twe
    14.  What you should now see in the text editor is a list of links to each individual tweet on that page. If not, then try clicking the bookmark once more and then try pasting into the text file again.
    15.  Save the text file. I usually save it to my Desktop as **tweets.txt**.
 
-[Video demonstration :: Generating a list of links to tweets](https://nanick.hopto.org/IFRAMES/_twitorial.mp4)
+[Video demonstration :: Generating a list of links to tweets](https://nanick.hopto.org/IFRAMES/_twitorial.mp4)  
 disclaimer: Part of this video is hard coded at 5x the speed at which it was recorded starting from 1 minute and 10 seconds in to 2 minutes and 17 seconds in.
 
 As far as prerequisites are concerned, that should be everything.
