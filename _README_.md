@@ -27,7 +27,7 @@ https://api.twitter.com/2/timeline/home.json?include_profile_interstitial_type=1
 ```ps1
 AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA
 ```
-[![Alternate Text]({https://nanick.hopto.org/IFRAMES/v1.png})]({https://nanick.hopto.org/IFRAMES/2.mp4} "Twitorial 1")
+[![Twitorial 1]({https://nanick.hopto.org/IFRAMES/v1.png})]({https://nanick.hopto.org/IFRAMES/2.mp4} "Twitorial 1")
 
 ##     Generating a list of tweets
 
