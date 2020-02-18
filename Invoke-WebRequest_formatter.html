@@ -1,0 +1,182 @@
+<html><head>
+        <meta charset="UTF8">
+        <script type="application/javascript">
+            function FormatIwr () {
+                var iwr = (document.getElementById("neekiwr")).value;
+                var div = document.getElementById("neek");
+                var idiv = document.getElementById("neekdiv");
+                var obj = {};
+                var names = [];
+                var one = [];
+                var heads = {};
+                var names2 = [];
+                var cooks = {};
+                var names3 = [];
+                var output = [];
+                var h = [];
+                var hedz = [];
+                var one = [];
+                for(var i = 0; i < iwr.split(" -").length; i++){
+                    obj[iwr.split(" -")[i].split(' ')[0]] = iwr.split(" -")[i];
+                    names.push(iwr.split(" -")[i].split(' ')[0]);
+                }
+                h.push(obj["Headers"].split('"; "')[0].split('{')[1].split('"').slice(1,obj["Headers"].split('"; "')[0].split('{')[1].split('"').length).join('"'));
+                for(var i = 0; i < obj["Headers"].split('"; "').slice(1,obj["Headers"].split('"; "').length) .length; i++){
+                    var headerTitle = obj["Headers"].split('"; "').slice(1,obj["Headers"].split('"; "').length)[i];
+                    var hTitle = headerTitle.toLowerCase();
+                    if(hTitle.match("accept-encoding")){
+                        h.push((obj["Headers"].split('"; "').slice(1,obj["Headers"].split('"; "').length)[i]).replace(", br",''));
+                    }
+                    if(!(hTitle.match("accept-encoding"))){
+                        h.push(obj["Headers"].split('"; "').slice(1,obj["Headers"].split('"; "').length)[i]);
+                    }
+                    names2.push(obj["Headers"].split('"; "')[i].split('=')[0]);
+                }
+                for(var i = 0; i < (obj["Headers"].split('"; "')).length; i++){
+                    var current = obj["Headers"].split('"; "')[i];
+                    if(current.match("ookie")){
+                        var cukobj = current;
+                    }
+                }
+                if(cukobj){
+                    var cukee = [];
+                    cukee.push(cukobj.split('; ')[0].split('=').slice(1,cukobj.split('; ')[0].split('=').length).join('=').replace('"',''));
+                    for(var i = 0; i < (cukobj.split('; ').slice(1,cukobj.split('; ').length)).length; i++){
+                        var current = (cukobj.split('; ').slice(1,cukobj.split('; ').length))[i];
+                        cukee.push(current);
+                    }
+                }
+                if(obj[names[2]].match("Headers")){
+                    var boo = false;
+                    one.push(obj[names[0]] + ' -Headers @{');
+                }
+                if(!(obj[names[2]].match("Headers"))){
+                    var boo = true;
+                    one.push(obj[names[0]] + ' -' + obj[names[2]] + ' `')
+                }
+                for(var i = 0; i < names.length; i++){
+                    var current = names[i];
+                    if(current != "Headers"){
+                        if(i != 0){
+                            if(i != 1){
+                                if(i != 2){
+                                    var push = obj[current].replace(/\r?\n|\r/g,'');
+                                    one.push('-' + push + ' `');
+                                }
+                            }
+                        }
+                    }
+                }
+                for(var i = 0; i < names.length; i++){
+                    var current = names[i];
+                    if(current === "Headers"){
+                        if(boo){
+                            one.push("-Headers @{")
+                        }
+                        for(var ii = 0; ii < h.length; ii++){
+                            if(h[ii].match('ookie"=')){
+                                one.push('    "cookie"="');
+                                for(var iii = 0; iii < cukee.length; iii++){
+                                    if(cukee[iii].match('"}$')){
+                                        if(iii === (cukee.length - 1)){
+                                            one.push('        ' + cukee[iii].replace((new RegExp('"}' + '$')),';'));
+                                            one.push('    ";')
+                                            one.push('} `')
+                                        }
+                                    } else {
+                                        if(iii === (cukee.length - 1)){
+                                            var last = cukee[iii].replace('"$','');
+                                            one.push('        ' + last + ';');
+                                            one.push('    ";')
+                                        } else {
+                                            one.push('        ' + cukee[iii] + ';');
+                                        }
+                                    }
+                                }
+                            }
+                            if(!(h[ii].match('ookie"="'))){
+                                if(h[ii].match("}")){
+                                    one.push('    "' + h[ii].split('}')[0] + ';');
+                                    one.push('} `');
+                                }
+                                if(!(h[ii].match("}"))){
+                                    one.push('    "' + h[ii] + '";');
+                                }
+                            }
+                        }
+                    }
+                }
+                one.push('-' + obj[names[1]]);
+                document.body.removeChild(div);
+                var divlog = document.createElement("div");
+                divlog.id = "neeklog";
+                document.body.appendChild(divlog);
+                var logelem = document.getElementById("neeklog");
+                var pre = document.createElement("pre");
+                pre.id = "neekpre";
+                logelem.appendChild(pre);
+                var npre = document.getElementById("neekpre");
+                var text = document.createElement("TEXTAREA");
+                text.readOnly = true;
+                text.id = "neeklogs";
+                text.className = "neekloggers";
+                text.cols = 10000;
+                text.rows = 200;
+                for(var i = 0; i < one.length; i++){
+                    var current = one[i];
+                    text.value += current + "\n";
+                }
+                npre.appendChild(text);
+                var copyb = document.createElement("input")
+                copyb.id = "neekcopy";
+                copyb.type = "button";
+                copyb.value = "Copy To Clipboard!";
+                copyb.onclick = function () {
+                    var gettext = document.getElementById("neeklogs");
+                    gettext.select();
+                    document.execCommand("copy");
+                    function RemoveSelection () {
+                        if (window.getSelection) {
+                            var selection = window.getSelection ();                                        
+                            selection.removeAllRanges ();
+                        } else {
+                            if (document.selection.createRange) {
+                                var range = document.selection.createRange ();
+                                document.selection.empty ();
+                            }
+                        }
+                    }
+                    RemoveSelection();
+                }
+                var button = document.getElementById("neekbutton");
+                idiv.removeChild(button);
+                idiv.appendChild(copyb);
+            }
+        </script>
+        <style>
+            #neek {
+                margin:auto;
+                overflow-x:scroll;
+                white-space:nowrap;
+            }
+            pre {
+                margin: 0;
+                padding: 0;
+            }
+            #neeklogs {
+                border: none;
+                overflow: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="neekdiv">
+            <input id="neekbutton" type="button" value="Format!" onclick="FormatIwr();">
+        </div>
+        <br>
+        <div id="neek" class="neektext">
+            <textarea id="neekiwr" rows="50" cols="200" autofocus="" placeholder="Paste your IWR script here"></textarea>
+        </div>
+    
+
+<textarea id="neek"></textarea><textarea id="neek"></textarea></body></html>
