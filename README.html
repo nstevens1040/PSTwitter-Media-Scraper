@@ -1,0 +1,136 @@
+<html>
+
+<head>
+    <meta charset="utf8">
+    <style>
+        body {
+            font-family: Consolas;
+        }
+        
+        h1 {
+            text-decoration: underline;
+        }
+        
+        h2 {
+            text-decoration: underline;
+            font-size: 18px;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-left: 3px solid #f36d33;
+            color: #667;
+            page-break-inside: avoid;
+            font-family: monospace;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            overflow: auto;
+            padding: 10px 10px;
+            display: block;
+            word-wrap: break-word;
+        }
+        
+        .fine {
+            color: #667;
+            font-style: italic;
+            font-size: 11px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Requirements</h1>
+    <ol>
+        <li>Windows OS ==&gt; Internet Explorer and PowerShell</li>
+        <li>Google Chrome</li>
+        <li>FFMPEG</li>
+        <li>A Twitter account (username and password)</li>
+        <li>Twitter Bearer Token</li>
+        <li>A list of links to individial tweets</li>
+        <h2> Retrieving your Bearer Token</h2>
+        <ol>
+            <li> Launch Google Chrome</li>
+            <li> Hold CTRL+SHIFT and strike N to launch a new window in <b>Incognito Mode</b>.</li>
+            <li> Strike F12 to open developer tools and then click on the <b>Network</b> tab.</li>
+            <li> Back in your Incognito window, navigate to <a href="https://twitter.com">https://twitter.com</a> and login.</li>
+            <li> Go back to the <b>Network</b> tab in developer tools and type <b>api.twitter.com/2</b> into the search field up top.</li>
+            <li> Find the request that starts with <b>home.json</b>. I left the full url below.<br>
+                <pre>https://api.twitter.com/2/timeline/home.json?include_profile_interstitial_type=1&amp;include_blocking=1&amp;include_blocked_by=1&amp;include_followed_by=1&amp;include_want_retweets=1&amp;include_mute_edge=1&amp;include_can_dm=1&amp;include_can_media_tag=1&amp;skip_status=1&amp;cards_platform=Web-12&amp;include_cards=1&amp;include_composer_source=true&amp;include_ext_alt_text=true&amp;include_reply_count=1&amp;tweet_mode=extended&amp;include_entities=true&amp;include_user_entities=true&amp;include_ext_media_color=true&amp;include_ext_media_availability=true&amp;send_error_codes=true&amp;simple_quoted_tweets=true&amp;earned=1&amp;count=20&amp;lca=true&amp;ext=mediaStats%2CcameraMoment</pre>
+                <br>
+            </li>
+            <li> Right click on the request and hover over <b>copy</b>. Then, in the secondary context menu that appears, select <b>copy as powershell.</b>
+            </li>
+            <li> In a new tab, navigate to <a href="https://nanick.hopto.org/iframes/iwrprettyprint.html">https://nanick.hopto.org/iframes/iwrprettyprint.html</a>. I've also provided <b>Invoke-WebRequest_formatter.html</b> as a file in this repository so you
+                can view your script locally.</li>
+            <li> CTRL+V into the text area and then click <b>Format!</b> to pretty print the resulting PowerShell script.</li>
+            <li> Underneath <b>-Headers @{</b> there should be a webheader named <b>authorization</b> and it should appear like this ↓.<br>
+                <pre>"authorization"="Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";</pre>
+                <br>
+            </li>
+            <li> In my case, I would save <br>
+                <pre>AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA</pre>
+                <br> in a text file to be used later.</li>
+        </ol>
+        <br>
+        <div>
+            <video height="405" width="720" autoplay="" loop="" muted="" controls="" src="https://nanick.hopto.org/IFRAMES/2.mp4">
+</video>
+        </div>
+        <br>
+        <h2> Generating a list of tweets</h2>
+        <ol>
+            <li> Launch a new tab in Google Chrome.</li>
+            <li> Navigate to <a href="https://twitter.com">https://twitter.com</a> and login. Then navigate to a Twitter page that you'd like to pull all of the tweets from.</li>
+            <li> Strike CTRL+D to bookmark the page.</li>
+            <li> Click the three dots on the right. Hover over <b>Bookmarks</b> and make sure that there is a check next to <b>show bookmarks bar</b>.</li>
+            <li> Launch a new tab and navigate to <a href="chrome://bookmarks/">chrome://bookmarks/</a>.</li>
+            <li> Find the bookmark that you just created and drag it to the bookmarks bar (underneath the address bar).</li>
+            <li> Right click on the bookmark and select <b>edit</b>. In the dialog that follows, feel free to name the bookmark whatever you'd like.</li>
+            <li> In the <b>URL</b> field, delete the current value and paste the javascript below:<br>
+                <pre>javascript:function finishClip(){ document.onscroll = ''; uniq = [...new Set(tweets)]; var list = uniq.join("\n"); var ta = document.createElement("textarea"); ta.id = "neek"; ta.value = list; document.body.appendChild(ta); var t = document.getElementById("neek"); t.select(); return document.execCommand("copy"); }; function EOP(){ var top = document.scrollingElement.scrollTop; scrollit(); if(document.scrollingElement.scrollTop == top){ return true; } else { return false; } }; if (typeof tweets === "undefined") { var tweets = []; }; function logScrollValues(){ console.log("scrollheight: " + getScrollHeight() + " scrollTop: " + getScrollTop() + " sum: " + (getScrollHeight() - getScrollTop()) + " condtion met: " + (getScrollHeight() &gt;= getScrollTop()) + " readyState: " + document.readyState); }; function getScrollHeight(){ return (document.scrollingElement.scrollHeight - 300); }; function getScrollTop(){ return (document.scrollingElement.scrollTop); }; function scrollit() { if(document.readyState != 'complete'){ setTimeout(function(){ console.log("waiting for document to load"); },2000); }; var z = document.body.getElementsByTagName("A"); for (var i = 0; i &lt; z.length; i++) {  var current = z[i];  if (current.classList.length == 13) {  tweets.push(current.href);  }; }; document.scrollingElement.scrollBy(0, 650); }; if(typeof scrollog == 'undefined'){ var scrollog = function () {  scrollit(); logScrollValues(); }; }; if(document.onscroll != scrollog){ document.onscroll = function (){ scrollog(); setTimeout(function(){ scrollog(); },4000); }; }; scrollit(); var eop = EOP(); if(eop){ finishClip(); setTimeout(function(){ alert("you've reached the end of the page. All tweets have been copied to the clipboard!"); },2000); };</pre>
+                <br>
+            </li>
+            <li> Now navigate back to the twitter page that you'd like to pull all of the links to inidividual tweets from.</li>
+            <li> I usually refresh the page.</li>
+            <li> Now click on the bookmark that you just created. The page should start to scroll on it's own.</li>
+            <li> Wait until it reaches the very bottom of the page and then click on the bookmark one more time.</li>
+            <li> Open a text editor (notepad.exe works fine) and CTRL+V.</li>
+            <li> What you should now see in the text editor is a list of links to each individual tweet on that page. If not, then try clicking the bookmark once more and then try pasting into the text file again.</li>
+            <li> Save the text file. I usually save it to my Desktop as <b>tweets.txt</b>.</li>
+        </ol>
+        <br>
+        <div>
+            <video height="405" width="720" autoplay="" loop="" muted="" controls="" src="https://nanick.hopto.org/IFRAMES/_twitorial.mp4">
+</video>
+            <p class="fine">disclaimer: Part of this video is hard coded at 5x the speed at which it was recorded starting from 1 minute and 10 seconds in to 2 minutes and 17 seconds in. Watch the time in the taskbar.</p>
+        </div>
+        <br>
+    </ol>
+    <p>As far as prerequisites are concerned, that should be everything.</p>
+    <h2> Scraping all media with PowerShell</h2>
+    <ol>
+        <li> Launch PowerShell as administrator and run the code below:<br/>
+            <pre>git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git
+cd PowerShell-Twitter-web-scraper
+.\Create-DesktopShortcut.ps1</pre>
+        </li>
+        <li> Use <b>WinKey + D</b> to show the Desktop. There should now be a shortcut named 'Twitter Media Scraper'. Double click the shortcut.</li>
+        <li> You will be asked for a bearer token. Use the bearer token that you've acquired at the beginning of this guide. <b>Paste only the token. Do not include the word bearer, authorization, or anything other than just the token.</b> You will then be
+            asked if you'd like to add a second bearer token. I usually add the bearer token associated with my Twitter developer account here. Again, paste only the token value and nothing else. Also, please be aware that I decided not to encrypt the
+            bearer values because they are unusable without the CSRF value that is dispensed upon successful login.</li>
+        <li> The file selection dialog appears and asks you to locate the file you saved from the section above that contains the list of links to individual tweets. Select your list file and continue.</li>
+        <li> A Windows credential dialog appears as you are asked to enter the username and password that you use to login to Twitter. <br/><b style="color: red;">Your credentials are immediately piped into System.Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes()) as a parameter which converts them to base64 (via unicode byte array) and then they are joined using a non-ascii character as the delimeter. The resultant string's unicode byte array is encrypted via the System.Security.Cryptography.ProtectedData dotnet assembly in the context of your local machine and then base64 encoded once more.</b></li>
+        <li> Once you are done with the steps above, which the script guides you through, you can sit back and monitor the scripts progression through your list of tweets.</li>
+    </ol>
+    <br>
+    <div>
+        <video height="405" width="720" autoplay="" loop="" muted="" controls="" src="https://nanick.hopto.org/IFRAMES/powershell.mp4">
+</video>
+        <p class="fine">disclaimer: Part of this video is hard coded at 100x the speed at which it was recorded starting from 2 minute and 50 seconds in to 3 minutes and 05 seconds in. Watch the time in the taskbar.</p>
+    </div>
+    <br>
+</body>
+
+</html>
