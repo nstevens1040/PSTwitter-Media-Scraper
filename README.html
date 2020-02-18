@@ -62,8 +62,7 @@
             </li>
             <li> Right click on the request and hover over <b>copy</b>. Then, in the secondary context menu that appears, select <b>copy as powershell.</b>
             </li>
-            <li> In a new tab, navigate to <a href="https://nanick.hopto.org/iframes/iwrprettyprint.html">https://nanick.hopto.org/iframes/iwrprettyprint.html</a>. I've also provided <b>Invoke-WebRequest_formatter.html</b> as a file in this repository so you
-                can view your script locally.</li>
+            <li> In a new tab, navigate to <a href="https://nanick.hopto.org/iframes/iwrprettyprint.html">https://nanick.hopto.org/iframes/iwrprettyprint.html</a>. I've also provided <b>Invoke-WebRequest_formatter.html</b> as a file in this repository so you can view your script locally.</li>
             <li> CTRL+V into the text area and then click <b>Format!</b> to pretty print the resulting PowerShell script.</li>
             <li> Underneath <b>-Headers @{</b> there should be a webheader named <b>authorization</b> and it should appear like this ↓.<br>
                 <pre>"authorization"="Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8FAKETOKEN%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";</pre>
@@ -102,8 +101,7 @@
         </ol>
         <br>
         <div>
-            <video height="405" width="720" autoplay="" loop="" muted="" controls="" src="https://nanick.hopto.org/IFRAMES/_twitorial.mp4">
-</video>
+            <video height="405" width="720" autoplay="" loop="" muted="" controls="" src="https://nanick.hopto.org/IFRAMES/_twitorial.mp4"></video>
             <p class="fine">disclaimer: Part of this video is hard coded at 5x the speed at which it was recorded starting from 1 minute and 10 seconds in to 2 minutes and 17 seconds in. Watch the time in the taskbar.</p>
         </div>
         <br>
@@ -112,22 +110,19 @@
     <h2> Scraping all media with PowerShell</h2>
     <ol>
         <li> Launch PowerShell as administrator and run the code below:<br/>
-            <pre>git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git
+            <pre>git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git 
 cd PowerShell-Twitter-web-scraper
 .\Create-DesktopShortcut.ps1</pre>
         </li>
         <li> Use <b>WinKey + D</b> to show the Desktop. There should now be a shortcut named 'Twitter Media Scraper'. Double click the shortcut.</li>
-        <li> You will be asked for a bearer token. Use the bearer token that you've acquired at the beginning of this guide. <b>Paste only the token. Do not include the word bearer, authorization, or anything other than just the token.</b> You will then be
-            asked if you'd like to add a second bearer token. I usually add the bearer token associated with my Twitter developer account here. Again, paste only the token value and nothing else. Also, please be aware that I decided not to encrypt the
-            bearer values because they are unusable without the CSRF value that is dispensed upon successful login.</li>
+        <li> You will be asked for a bearer token. Use the bearer token that you've acquired at the beginning of this guide. <b>Paste only the token. Do not include the word bearer, authorization, or anything other than just the token.</b> You will then be asked if you'd like to add a second bearer token. I usually add the bearer token associated with my Twitter developer account here. Again, paste only the token value and nothing else. All Bearer tokens and CSRF values are encrypted using the System.Security.Cryptography.ProtectedData dotnet assembly.</li>
         <li> The file selection dialog appears and asks you to locate the file you saved from the section above that contains the list of links to individual tweets. Select your list file and continue.</li>
         <li> A Windows credential dialog appears as you are asked to enter the username and password that you use to login to Twitter. <br/><b style="color: red;">Your credentials are immediately piped into System.Convert.ToBase64String(System.Text.Encoding.Unicode.GetBytes()) as a parameter which converts them to base64 (via unicode byte array) and then they are joined using a non-ascii character as the delimeter. The resultant string's unicode byte array is encrypted via the System.Security.Cryptography.ProtectedData dotnet assembly in the context of your local machine and then base64 encoded once more.</b></li>
         <li> Once you are done with the steps above, which the script guides you through, you can sit back and monitor the scripts progression through your list of tweets.</li>
     </ol>
     <br>
     <div>
-        <video height="405" width="720" autoplay="" loop="" muted="" controls="" src="https://nanick.hopto.org/IFRAMES/powershell.mp4">
-</video>
+        <video height="405" width="720" autoplay="" loop="" muted="" controls="" src="https://nanick.hopto.org/IFRAMES/powershell.mp4"></video>
         <p class="fine">disclaimer: Part of this video is hard coded at 100x the speed at which it was recorded starting from 2 minute and 50 seconds in to 3 minutes and 05 seconds in. Watch the time in the taskbar.</p>
     </div>
     <br>
