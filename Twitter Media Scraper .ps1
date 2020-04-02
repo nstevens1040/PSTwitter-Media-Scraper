@@ -171,6 +171,11 @@
                                     $7ZOUT = cmd /c "`"C:\TEMP\BIN\7-Zip\7z.exe`" x `"$($FILE)`" -y -o`"$($FOLDER)`" * 2>&1"
                                     $DLLFILE = gci -Recurse $FOLDER "*$($ASMNAME).dll" | % FullName
                                     Add-type -Path $DLLFILE
+                                    if(("$($ASMNAME)"-as [type])){
+                                        Write-Host "Assembly: " -ForegroundColor Yellow -NoNewline
+                                        Write-Host "$($ASMNAME) " -ForegroundColor Green -NoNewline
+                                        Write-Host "loaded successfully by DLL file" -ForegroundColor Yellow 
+                                    }
                                 }
                                 if(!$NONUGET){
                                     Write-Host "Attempting to resolve nuget package" -ForegroundColor Yellow
