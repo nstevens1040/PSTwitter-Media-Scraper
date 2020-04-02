@@ -1447,10 +1447,6 @@ function CreateDownload-Folders
 $epochtime = Get-EpochUnixTimeUTC
 $EXCEPTIONLOG = "C:\TEMP\SOCIAL\TWITTER\TW_BUCKET\Exceptions_$($EpochTime).txt"
 $DLLINKLOG = "C:\TEMP\SOCIAL\TWITTER\TW_BUCKET\Download_Links_$($EpochTime).txt"
-Write-Host "I'll be logging any exceptions here: " -ForegroundColor Yellow -NoNewline
-Write-Host $EXCEPTIONLOG -ForegroundColor Green
-Write-Host "I'll be logging download links here: " -ForegroundColor Yellow -NoNewline
-Write-Host $DLLINKLOG -ForegroundColor Green
 if ($TARGET_WEBPAGE) {
     $PAGE2SCRAPE = $TARGET_WEBPAGE
 }
@@ -1458,6 +1454,10 @@ Install-7Z
 AddAllAssemblies
 SetConsoleOptions
 Install_Choco_7z_dotnet_ffmpeg
+Write-Host "I'll be logging any exceptions here: " -ForegroundColor Yellow -NoNewline
+Write-Host $EXCEPTIONLOG -ForegroundColor Green
+Write-Host "I'll be logging download links here: " -ForegroundColor Yellow -NoNewline
+Write-Host $DLLINKLOG -ForegroundColor Green
 if ($SECONDARY_BEARER_TOKEN) {
     $SECONDARY_BEARER = [System.Convert]::ToBase64String(
         [System.Security.Cryptography.ProtectedData]::Protect(
