@@ -170,7 +170,12 @@ function AddAllAssemblies
                                     ([System.Net.WebClient]::new()).DownloadFile($DLLINK,$FILE)
                                     $7ZOUT = cmd /c "`"C:\TEMP\BIN\7-Zip\7z.exe`" x `"$($FILE)`" -y -o`"$($FOLDER)`" * 2>&1"
                                     $DLLFILE = Get-ChildItem -Recurse $FOLDER "*$($ASMNAME).dll" | ForEach-Object FullName
-                                    Add-Type -Path $DLLFILE
+                                    Add-Type -Path $DLLFILE -ea 0
+                                    if($?){
+                                        Write-Host "Assembly: " -ForegroundColor Yellow -NoNewline
+                                        Write-Host "$($ASMNAME) " -ForegroundColor Green -NoNewline
+                                        Write-Host "loaded successfully by DLL file" -ForegroundColor Yellow
+                                    }
                                 }
                                 if (!$NONUGET) {
                                     Write-Host "Attempting to resolve nuget package" -ForegroundColor Yellow
