@@ -5,6 +5,31 @@ param(
     [switch]$DONT_REENCODE_VIDEOS = $true,
     [string]$TARGET_WEBPAGE
 )
+function Start-IE
+{
+    param()
+    while (!$test) {
+        try {
+            $test = Invoke-WebRequest google.com -ea 0 -Method Head
+        }
+        catch [System.NotSupportedException]{
+            if (!$ans) {
+                $ans = [Microsoft.VisualBasic.Interaction]::MsgBox(
+                    "You will need to open Internet Explorer and complete the 'first run' wizard.",
+                    [Microsoft.VisualBasic.MsgBoxStyle]::OkOnly,
+                    "Twitter Web Scraping Machine"
+                )
+            }
+            if (!$iexplore) {
+                . "C:\program files\internet Explorer\iexplore.exe"
+                while ((Get-Process iexplore -ea 0)) {
+                    sleep -m 200
+                }
+                $iexplore = $true
+            }
+        }
+    }
+}
 function Install-7Z
 {
     param()
@@ -1450,6 +1475,7 @@ $DLLINKLOG = "C:\TEMP\SOCIAL\TWITTER\TW_BUCKET\Download_Links_$($EpochTime).txt"
 if ($TARGET_WEBPAGE) {
     $PAGE2SCRAPE = $TARGET_WEBPAGE
 }
+Start-IE
 Install-7Z
 AddAllAssemblies
 SetConsoleOptions
