@@ -815,7 +815,8 @@ function Install-DotNet_nupkg
     }
     $null = [System.IO.Directory]::CreateDirectory($FOLDER)
     ([System.Net.WebClient]::new()).DownloadFile($DLLINK,$FILE)
-    $7ZOUT = cmd /c "`"C:\TEMP\BIN\7-Zip\7z.exe`" x `"$($FILE)`" -y -o`"$($FOLDER)`" * 2>&1"
+    $7ZEXE =  Get-Command 7z.exe |% source
+    $7ZOUT = cmd /c "`"$($7ZEXE)`" x `"$($FILE)`" -y -o`"$($FOLDER)`" * 2>&1"
     $DLLFILE = @(@(@(Get-ChildItem -Recurse $FOLDER "*$($DLLINK.Split('/')[-2]).dll").Where({
                     $_.Directory.Name.length -le 6 -and `
                          $_.Directory.Parent.Name.StartsWith("lib") -and `
