@@ -267,7 +267,7 @@
                     }
                 }
             }
-    "@ `
+"@ `
              -ReferencedAssemblies (
             "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Windows.Forms\v4.0_4.0.0.0__b77a5c561934e089\System.Windows.Forms.dll",
             "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll",
@@ -420,7 +420,7 @@
               }
             }
             }
-    "@
+"@
     
         Add-Type -TypeDefinition @"
                 using System;
@@ -452,7 +452,7 @@
                         public int Bottom;      // y position of lower-right corner
                     }
                 }
-    "@
+"@
         Add-Type -TypeDefinition @"
                 using System;
                 using System.Text;
@@ -535,7 +535,7 @@
                         }
                     }
                 }
-    "@
+"@
     
     }
     function SetConsoleOptions
@@ -556,7 +556,7 @@
             |_| \_/\_/ |_|\__|\__\___|_|        \/  \/ \___|_.__/  |_____/ \___|_|  \__,_| .__/ \___|_|   
                                                                                          | |              
                                                                                          |_|              
-    "@
+"@
         Write-Host "`n"
     }
     function CheckAuthGetUser
@@ -883,7 +883,7 @@
                 </DIV>
             </Body>
         </Html>
-    "@
+"@
         $s = @"
         var start = new Date().getTime();
         var end = new Date();
@@ -925,7 +925,7 @@
             }, 50);
         }
         stowa()
-    "@
+"@
         $sc = $ie.Document.createElement("script")
         $sc.innerHTML = $s
         While($ie.busy){ sleep -m 200 }
@@ -1752,8 +1752,10 @@
     $FINDMEDIA = @()
     $JSON = $TWEETS.ResponseText | ConvertFrom-Json
     $TWTS = $JSON | % globalObjects | % tweets
-    
-    $JSON | % globalObjects | % tweets | gm -MemberType NoteProperty | % Name | % {
+    $TWTSALL = $TWTS.Count
+    $TWTSC = 0
+    $TWTS | gm -MemberType NoteProperty | % Name | % {
+        $TWTSC++
         Remove-Variable r,ONE,TWO,THR,TID,TWEETOBJECT -ea 0
         $r = $false
         $TID = $_
@@ -1773,6 +1775,7 @@
         if(!$r){
             $FINDMEDIA += $TWEETOBJECT
         }
+        Write-Host -PercentComplete ($TWTSC/$TWTSALL*100) -Status "$([math]::Round(($TWTSC/$TWTSALL*100),2))%" -Activity "Filtering parsed links :: $($TWTSC) of $($TWTSALL)"
     }
     $start = Get-Date;
     $c = 0;
