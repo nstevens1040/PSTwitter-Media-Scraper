@@ -1752,7 +1752,7 @@
     $FINDMEDIA = @()
     $JSON = $TWEETS.ResponseText | ConvertFrom-Json
     $TWTS = $JSON | % globalObjects | % tweets
-    $TWTSALL = $TWTS.Count
+    $TWTSALL = @($JSON | % globalObjects | % tweets | gm -MemberType NoteProperty).Length
     $TWTSC = 0
     $TWTS | gm -MemberType NoteProperty | % Name | % {
         $TWTSC++
