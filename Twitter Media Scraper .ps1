@@ -1775,7 +1775,7 @@
         if(!$r){
             $FINDMEDIA += $TWEETOBJECT
         }
-        Write-Host -PercentComplete ($TWTSC/$TWTSALL*100) -Status "$([math]::Round(($TWTSC/$TWTSALL*100),2))%" -Activity "Filtering parsed links :: $($TWTSC) of $($TWTSALL)"
+        Write-Progress -PercentComplete ($TWTSC/$TWTSALL*100) -Status "$([math]::Round(($TWTSC/$TWTSALL*100),2))%" -Activity "Filtering parsed links :: $($TWTSC) of $($TWTSALL)"
     }
     $start = Get-Date;
     $c = 0;
