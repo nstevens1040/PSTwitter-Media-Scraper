@@ -196,8 +196,6 @@
                                         }
                                         $null = [System.IO.Directory]::CreateDirectory($FOLDER)
                                         ([System.Net.WebClient]::new()).DownloadFile($DLLINK,$FILE)
-                                        write-host $7ZEXE
-                                        read-host
                                         $7ZOUT = cmd /c "`"$($7ZEXE)`" x `"$($FILE)`" -y -o`"$($FOLDER)`" * 2>&1"
                                         $DLLFILE = gci -Recurse $FOLDER "*$($ASMNAME).dll" | % FullName
                                         Add-Type -Path $DLLFILE -ea 0
