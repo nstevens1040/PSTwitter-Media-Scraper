@@ -1798,7 +1798,7 @@
         if(!$r){
             $FINDMEDIA += $TWEETOBJECT
         }
-        Write-Progress -PercentComplete ($TWTSC/$TWTSALL*100) -Status "$([math]::Round(($TWTSC/$TWTSALL*100),2))%" -Activity "Filtering parsed links :: $($TWTSC) of $($TWTSALL)"
+        Write-Progress -PercentComplete ($TWTSC/$TWTSALL*100) -Status "$([math]::Round(($TWTSC/$TWTSALL*100),2))%" -Activity "Gathering links from tweets :: $($TWTSC) of $($TWTSALL) tweets parsed"
     }
     $start = Get-Date;
     $c = 0;
@@ -1876,7 +1876,7 @@
                 $ms = $_ | % milliseconds
             }
             $string = "$($days) days :: $($hours) hours :: $($minutes) minutes :: $($seconds) seconds ::$($ms) remaining"
-            Write-Progress -PercentComplete ($c / $all * 100) -Status "$($string) :: $([math]::Round(($c/$all*100),2))%" -Activity "$($c) of $($all) :: $($n)"
+            Write-Progress -PercentComplete ($c / $all * 100) -Status "$($string) :: $([math]::Round(($c/$all*100),2))%" -Activity "Checking link $($c) of $($all) for redirection :: $($n)"
         })
     $START = Get-Date
     $COUNT = 0
