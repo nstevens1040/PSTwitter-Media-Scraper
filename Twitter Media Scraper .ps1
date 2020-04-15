@@ -1170,7 +1170,7 @@
         $LINKS += $TWEETOBJECT | % entities | % urls | % expanded_url
         $LINKS += @("$($TWEETOBJECT | % full_text)".split(' ')).Where({ $_.Contains("http") })
         if($LINKS){
-            $LINKS.ForEach({ $_ | Out-File $DLLINKLOG -Encoding ascii })
+            $LINKS.ForEach({ $_ | Out-File $DLLINKLOG -Encoding ascii -Append})
             return $LINKS
         }
     }
