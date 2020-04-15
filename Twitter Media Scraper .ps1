@@ -129,7 +129,6 @@
             [Parameter(ValueFromPipeline=$true)]
             [string]$PATH7Z
         )
-        write-host $PATH7Z
         if($PATH7Z){ $7ZEXE = $PATH7Z }
         @(
             "System.Net",
