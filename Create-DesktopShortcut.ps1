@@ -1,6 +1,6 @@
 $wscript = [System.Activator]::createInstance(
     [type]::getTypeFromCLSID(
-        [GUID]::Parse('{72C24DD5-D70A-438B-8A42-98424B88AFB8}')
+        [GUID]"72C24DD5-D70A-438B-8A42-98424B88AFB8"
     )
 )
 $lnk = $wscript.CreateShortcut("$($ENV:USERPROFILE)\Desktop\Twitter Media Scraper.lnk")
