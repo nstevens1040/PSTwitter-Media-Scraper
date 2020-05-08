@@ -49,5 +49,5 @@
 At this point, you are finished entering the information necessary to proceed. The script's output will keep you updated on it's progress.
 
 The steps above are illustrated in the video below.
-![ScreenShot](https://nanick.hopto.org/PSTwitterGif2.gif)
+![ScreenShot](https://nanick.hopto.org/PSTwitterPart1.gif)
 
