@@ -49,5 +49,4 @@
 At this point, you are finished entering the information necessary to proceed. The script's output will keep you updated on it's progress.
 
 The steps above are illustrated in the video below.
-
-[![alt](https://nanick.hopto.org/prod/capture.png)](https://nanick.hopto.org/prod/PSTwitterVideo.mp4)
+![ScreenShot](https://nanick.hopto.org/prod/PSTwitterGif2.gif)
