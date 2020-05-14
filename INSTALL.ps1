@@ -48,12 +48,10 @@ if(!$PWD.Path.Contains("PSTwitter-Media-Scraper")){
                 $null = ([System.Diagnostics.Process]@{
                     StartInfo = [System.Diagnostics.ProcessStartInfo]@{
                         FileName = "$($PSHOME)\PowerShell.exe";
-                        Arguments = " -WindowStyle Hidden -noprofile -nologo -ep RemoteSigned -c iex (irm "https://";
-                        Verb = "RunAs";
-                        WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden;
+                        Arguments = " -noprofile -nologo -ep RemoteSigned -c cd '$($CDIR)'; iex (irm 'https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/INSTALL.ps1')";
                     }
                 }).Start()
-                iex (irm "https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/INSTALL.ps1")
+                (get-process -Id $PID).kill()
             }
         }
         sleep -s 1
