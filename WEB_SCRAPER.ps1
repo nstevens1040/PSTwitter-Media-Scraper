@@ -765,7 +765,7 @@ Function Twitter-Login
     
         $UIMET = Execute-WebRequest -Method GET `
              -Uri "https://twitter.com/i/js_inst?c_name=ui_metrics"
-        $EXPIRES = [datetime]"$((@("$($UIMET.HttpResponseHeaders.Where({"$($_ | % Key)" -eq 'Set-Cookie'}) |% Value)".split(';')).Where({$_ -match 'expires'}) | select -first 1).split('=')[1])"
+        $EXPIRES = [datetime]"$(($UIMET.HttpResponseHeaders.GetValues("Set-Cookie").Split(';') | ? {$_ -match 'expires'} | select -First 1).split('=')[1])"
         $COOKIE1 = MakeCookie -JSON $CK1
         $COOKIE2 = MakeCookie -JSON $CK2 -EXPIRES $EXPIRES
         $BODY = MakeRequestBody -FORMS $FORMS -ENCRYPTED_CRED_STRING $ECS
