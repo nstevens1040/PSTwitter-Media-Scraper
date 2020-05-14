@@ -2,7 +2,7 @@ Function Install-PSTwitterMediaScraper
 {
     [cmdletbinding()]
     Param(
-        [stringh]$TARGET_URI
+        [string]$TARGET_URI
     )
     $STARTPATH = "$($PWD.Path)"
     if($MyInvocation.MyCommand.Path){
