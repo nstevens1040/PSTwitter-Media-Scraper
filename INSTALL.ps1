@@ -29,6 +29,7 @@
                             Arguments = " -ep RemoteSigned -noprofile -nologo -c cd '$($CDIR)'; iex (irm 'https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/INSTALL.ps1')"
                         };
                     }).Start()
+                    (Get-Process -Id $PID).kill()
                 }
             } else {
                 write-host "Local repository is out of date!`n" -ForegroundColor Red
