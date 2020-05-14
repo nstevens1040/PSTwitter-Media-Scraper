@@ -1,3 +1,10 @@
+$STARTPATH = "$($PWD.Path)"
+if($MyInvocation.MyCommand.Path){
+    $CDIR = "$([System.IO.FileInfo]::New($MyInvocation.MyCommand.Path).Directory.FullName)"
+    cd $CDIR
+} else {
+    $CDIR = "$($PWD.Path)"
+}
 function Get-EpochUnixTimeUTC
 {
     [CmdletBinding()]
@@ -363,15 +370,9 @@ Function Scrape-Page
 {
     [cmdletbinding()]
     Param(
-        [string]$TARGET_URI
+        [string]$TARGET_URI,
+        [string]$CDIR=$CDIR
     )
-    $STARTPATH = "$($PWD.Path)"
-    if($MyInvocation.MyCommand.Path){
-        $CDIR = "$([System.IO.FileInfo]::New($MyInvocation.MyCommand.Path).Directory.FullName)"
-        cd $CDIR
-    } else {
-        $CDIR = "$($PWD.Path)"
-    }
     if(![System.Environment]::GetEnvironmentVariable('TWBINROOT','MACHINE')){
         Write-host "Missing needed environment variable:`n" -foregroundcolor yellow
         write-host "`t%TWBINROOT%" -ForegroundColor green
@@ -395,6 +396,7 @@ Function Scrape-Page
             (Get-Process -Id $PID).kill()
         }
     }
+    cd "$($ENV:TWBINROOT)"
     if(!$PWD.Path.Contains("PSTwitter-Media-Scraper")){
         write-host "This script is not in the correct folder!" -ForegroundColor Red
     } else {
