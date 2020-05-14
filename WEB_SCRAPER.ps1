@@ -112,23 +112,23 @@ function Start-IE
 function Install-7Z
 {
     param()
-    if(![System.IO.File]::Exists("C:\Program Files\7-Zip\7z.exe") -and ![System.IO.File]::Exists("$($ENV:TWBINROOT)\7-zip\7z.exe")){
+    if(![System.IO.File]::Exists("C:\Program Files\7-Zip\7z.exe") -and ![System.IO.File]::Exists("$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\7-zip\7z.exe")){
         Write-Host "Installing 7-zip ..." -ForegroundColor Yellow
         $r = iwr "https://www.7-zip.org/download.html"
         $URI = @(@($r.ParsedHtml.getElementsByTagName("A")).Where({ $_.href -match "-x64.msi" }) | % href).ForEach({ $_ -replace "about:","https://7-zip.org/" })[0]
-        $FILE = "$($ENV:TWBINROOT)\INSTALLERS\$((@(@($r.ParsedHtml.getElementsByTagName("A")).Where({$_.href -match "-x64.msi"}) | % href).ForEach({$_ -replace "about:","https://7-zip.org/"})[0]).split("/")[-1])"
-        if(![System.IO.Directory]::Exists("$($ENV:TWBINROOT)\INSTALLERS")){
-            $null = [System.IO.Directory]::CreateDirectory("$($ENV:TWBINROOT)\INSTALLERS")
+        $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\INSTALLERS\$((@(@($r.ParsedHtml.getElementsByTagName("A")).Where({$_.href -match "-x64.msi"}) | % href).ForEach({$_ -replace "about:","https://7-zip.org/"})[0]).split("/")[-1])"
+        if(![System.IO.Directory]::Exists("$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\INSTALLERS")){
+            $null = [System.IO.Directory]::CreateDirectory("$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\INSTALLERS")
         }
-        if(![System.IO.Directory]::Exists("$($ENV:TWBINROOT)\7-zip\")){
-            $null = [System.IO.Directory]::CreateDirectory("$($ENV:TWBINROOT)\7-zip\")
+        if(![System.IO.Directory]::Exists("$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\7-zip\")){
+            $null = [System.IO.Directory]::CreateDirectory("$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\7-zip\")
         }
         ([System.Net.WebClient]@{ Proxy = $null }).DownloadFile(
             $URI,
             $FILE
         )
-        if([System.IO.File]::Exists("$($ENV:TWBINROOT)\INSTALLERS\$((@(@($r.ParsedHtml.getElementsByTagName("A")).Where({$_.href -match "-x64.msi"}) | % href).ForEach({$_ -replace "about:","https://7-zip.org/"})[0]).split("/")[-1])")){
-            cmd /c "msiexec /i `"$($FILE)`" INSTALLDIR=$($ENV:TWBINROOT)\7-zip\ MSIINSTALLPERUSER=1 /qb /norestart"
+        if([System.IO.File]::Exists("$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\INSTALLERS\$((@(@($r.ParsedHtml.getElementsByTagName("A")).Where({$_.href -match "-x64.msi"}) | % href).ForEach({$_ -replace "about:","https://7-zip.org/"})[0]).split("/")[-1])")){
+            cmd /c "msiexec /i `"$($FILE)`" INSTALLDIR=$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\7-zip\ MSIINSTALLPERUSER=1 /qb /norestart"
         }
     } else {
         Write-Host "7-zip is already installed" -ForegroundColor Yellow
@@ -150,7 +150,7 @@ function RelCom
 function AddAllAssemblies
 {
     param()
-    @([System.IO.Directory]::GetFiles("$($ENV:TWBINROOT)\Assemblies","*.dll",[System.IO.SearchOption]::AllDirectories)).ForEach({Add-Type -Path $_})
+    @([System.IO.Directory]::GetFiles("$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\Assemblies","*.dll",[System.IO.SearchOption]::AllDirectories)).ForEach({Add-Type -Path $_})
 }
 function SetConsoleOptions
 {
