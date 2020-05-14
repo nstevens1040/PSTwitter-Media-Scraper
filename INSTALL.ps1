@@ -1,4 +1,9 @@
-
+Function Install-PSTwitterMediaScraper
+{
+    [cmdletbinding()]
+    Param(
+        [stringh]$TARGET_URI
+    )
     $STARTPATH = "$($PWD.Path)"
     if($MyInvocation.MyCommand.Path){
         $CDIR = "$([System.IO.FileInfo]::New($MyInvocation.MyCommand.Path).Directory.FullName)"
@@ -230,5 +235,8 @@
         }
         "No" {}
     }
-    cd $STARTPATH
-    
+    if($TARGET_URI){
+        . "$($ENV:TWBINROOT)\WEB_SCRAPER.ps1"
+        Scrape-Page -TARGET_URI $TARGET_URI
+    }
+}
