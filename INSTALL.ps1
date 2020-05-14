@@ -236,7 +236,7 @@ Function Install-PSTwitterMediaScraper
         "No" {}
     }
     if($TARGET_URI){
-        . "$([System.Environment]::GetEnvironmentVariable("TWBINROOT",'MACHINE'))\WEB_SCRAPER.ps1"
+        iex (irm "https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/WEB_SCRAPER.ps1")
         Scrape-Page -TARGET_URI $TARGET_URI
     }
 }
