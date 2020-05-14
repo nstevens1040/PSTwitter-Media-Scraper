@@ -405,7 +405,7 @@ Function Scrape-Page
         })
         while(Compare-Object $ReposFiles $LocalFiles){
             if($PWD.Path -ne $CDIR){ cd $CDIR }
-            if($MyInvocation.MyCommand.Path){
+            if($MyInvocation.MyCommand.Path -or $MyInvocation.MyCommand.Name -eq 'Scrape-Page'){
                 write-host "INSTALL.ps1" -ForegroundColor blue -nonewline
                 write-host " was launched locally. To update the local repository, this file must not be in use." -foregroundcolor green
                 write-host "Launch new process?" -foregroundcolor yellow -NoNewLine
