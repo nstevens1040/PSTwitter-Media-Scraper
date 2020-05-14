@@ -23,7 +23,7 @@ if(!$PWD.Path.Contains("PSTwitter-Media-Scraper")){
             }
             move-item -LiteralPath $CDIR -Destination $DEST -Force
             if($?){
-                git clone https://github.com/nstevens1040/PSTwitter-Web-Scraper.git
+                git clone https://github.com/nstevens1040/PSTwitter-Media-Scraper.git
             }
             cd PSTwitter-Media-Scraper
             $ReposFiles = @(git ls-files).Where({$_ -ne 'LICENSE'})
