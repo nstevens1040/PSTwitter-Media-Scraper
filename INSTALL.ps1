@@ -45,7 +45,15 @@ if(!$PWD.Path.Contains("PSTwitter-Media-Scraper")){
                     $LocalFiles += $_ -replace "$([System.Text.RegularExpressions.Regex]::Escape("$($PWD.Path)"))\\",'' -replace "\\",'/'
                 })
             } else {
-
+                $null = ([System.Diagnostics.Process]@{
+                    StartInfo = [System.Diagnostics.ProcessStartInfo]@{
+                        FileName = "$($PSHOME)\PowerShell.exe";
+                        Arguments = " -WindowStyle Hidden -noprofile -nologo -ep RemoteSigned -c iex (irm "https://";
+                        Verb = "RunAs";
+                        WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden;
+                    }
+                }).Start()
+                iex (irm "https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/INSTALL.ps1")
             }
         }
         sleep -s 1
