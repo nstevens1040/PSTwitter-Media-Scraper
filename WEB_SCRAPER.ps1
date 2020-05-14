@@ -834,8 +834,8 @@ Function Twitter-Login
     write-host "You can use: " -ForegroundColor White 
     write-host "`tExecute-TwitterRequest" -foreGroundColor Yellow -NoNewLine
     write-host " -Uri " -ForeGroundColor Blue -NoNewLine 
-    write-host "`"https://api.twitter.com/2/...`"" -foregroundColor Green
-    write-host "`n"
+    write-host "`"https://api.twitter.com/2/...`"`n" -foregroundColor Green
+    write-host "in this PowerShell session." -ForeGroundColor White
 }
 function Get-EpochUnixTimeUTC
 {
