@@ -365,6 +365,13 @@ Function Scrape-Page
     Param(
         [string]$TARGET_URI
     )
+    $STARTPATH = "$($PWD.Path)"
+    if($MyInvocation.MyCommand.Path){
+        $CDIR = "$([System.IO.FileInfo]::New($MyInvocation.MyCommand.Path).Directory.FullName)"
+        cd $CDIR
+    } else {
+        $CDIR = "$($PWD.Path)"
+    }
     if(![System.Environment]::GetEnvironmentVariable('TWBINROOT','MACHINE')){
         Write-host "Missing needed environment variable:`n" -foregroundcolor yellow
         write-host "`t%TWBINROOT%" -ForegroundColor green
