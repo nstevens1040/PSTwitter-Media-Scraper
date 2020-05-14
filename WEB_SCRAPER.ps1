@@ -388,6 +388,54 @@ Function Scrape-Page
             (Get-Process -Id $PID).kill()
         }
     }
+    if(!$PWD.Path.Contains("PSTwitter-Media-Scraper")){
+        write-host "This script is not in the correct folder!" -ForegroundColor Red
+    } else {
+        $ReposFiles = @(git ls-files).Where({$_ -ne 'LICENSE'})
+        $LocalFiles = @()
+        @([System.IO.Directory]::GetFiles("$($pwd.Path)","*.*",[System.IO.SearchOption]::AllDirectories)).Where({[System.IO.FileInfo]::new($_).Extension -in (".dll",".cs",".gif",".pdb",".ps1",".dll",".md",".xml")}).ForEach({
+            $LocalFiles += $_ -replace "$([System.Text.RegularExpressions.Regex]::Escape("$($PWD.Path)"))\\",'' -replace "\\",'/'
+        })
+        while(Compare-Object $ReposFiles $LocalFiles){
+            if($PWD.Path -ne $CDIR){ cd $CDIR }
+            if($MyInvocation.MyCommand.Path){
+                write-host "INSTALL.ps1" -ForegroundColor blue -nonewline
+                write-host " was launched locally. To update the local repository, this file must not be in use." -foregroundcolor green
+                write-host "Launch new process?" -foregroundcolor yellow -NoNewLine
+                Write-host "(y/n): " -ForeGroundColor White -NoNewLine
+                $ans = Read-Host
+                if($ans -eq 'y'){
+                    $null = ([System.Diagnostics.Process]@{
+                        StartInfo = [System.Diagnostics.ProcessStartInfo]@{
+                            FileName = "$($PSHOME)\PowerShell.exe";
+                            Arguments = " -ep RemoteSigned -noprofile -nologo -c cd '$($CDIR)'; iex (irm 'https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/INSTALL.ps1')"
+                        };
+                    }).Start()
+                    (Get-Process -Id $PID).kill()
+                }
+            } else {
+                write-host "Local repository is out of date!`n" -ForegroundColor Red
+                write-host "In order for this solution to work correctly, the local repository must be up to date.`n" -ForegroundColor Yellow
+                Write-Host "Delete the contents of:`n" -ForegroundColor Yellow
+                Write-Host "`t$($CDIR)`n" -ForegroundColor Green
+                write-host "and reset the local repo for: " -ForeGroundColor Yellow -NoNewLine
+                write-host "PSTwitter-Media-Scraper" -ForeGroundColor Blue -NoNewLine
+                Write-host " ?" -foregroundcolor yellow -NoNewLine
+                Write-host " (y/n)" -ForegroundColor White -NoNewline
+                $ans = read-host
+                if($ans -eq 'y'){
+                    gci -Recurse | Remove-Item -Recurse -Force
+                    git reset --hard origin/master
+                    $ReposFiles = @(git ls-files).Where({$_ -ne 'LICENSE'})
+                    $LocalFiles = @()
+                    @([System.IO.Directory]::GetFiles("$($pwd.Path)","*.*",[System.IO.SearchOption]::AllDirectories)).Where({[System.IO.FileInfo]::new($_).Extension -in (".dll",".cs",".gif",".pdb",".ps1",".dll",".md",".xml")}).ForEach({
+                        $LocalFiles += $_ -replace "$([System.Text.RegularExpressions.Regex]::Escape("$($PWD.Path)"))\\",'' -replace "\\",'/'
+                    })
+                }
+            }
+            sleep -s 1
+        }
+    }
     $BEARER_TOKEN = $GLOBAL:TWPARAMS.BEARER
     $CSRF = $GLOBAL:TWPARAMS.CSRF
     if(!$TARGET_URI){
