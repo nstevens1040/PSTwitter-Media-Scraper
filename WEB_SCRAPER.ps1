@@ -81,7 +81,7 @@ Function Check-Env
             sleep -s 1
         }
     }
-    Scrape-Page -TARGET_URI $TARGET_URI
+    #Scrape-Page -TARGET_URI $TARGET_URI
 }
 function Start-IE
 {
