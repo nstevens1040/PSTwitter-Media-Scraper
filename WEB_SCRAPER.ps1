@@ -445,6 +445,9 @@ Function Scrape-Page
             sleep -s 1
         }
     }
+    if(!$GLOBAL:TWPARAMS){
+        . "$($ENV:TWBINROOT)\LOGIN.ps1"
+    }
     $BEARER_TOKEN = $GLOBAL:TWPARAMS.BEARER
     $CSRF = $GLOBAL:TWPARAMS.CSRF
     if(!$TARGET_URI){
