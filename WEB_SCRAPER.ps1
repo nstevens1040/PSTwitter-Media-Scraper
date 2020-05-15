@@ -1304,7 +1304,7 @@ Function Scrape-Page
     $ex = @()
     $bwstart = [Console]::BufferWidth
     [console]::bufferWidth = [Console]::WindowWidth
-    for($i = 0; $i < @($TWTS | gm -MemberType NoteProperty | % Name).Count; $i++){
+    for($i = 0; $i -lt @($TWTS | gm -MemberType NoteProperty | % Name).Count; $i++){
         Remove-Variable TID,TWEETOBJECT -ea 0
         $TID = @($TWTS | gm -MemberType NoteProperty | % Name)[$i]
         $TWEETOBJECT = $TWTS | % $TID
