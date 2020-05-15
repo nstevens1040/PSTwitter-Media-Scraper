@@ -887,7 +887,7 @@ function Detect-Redirect
         "http://twitgoo.com",
         "tumblr.com",
         "https://vine.co"
-    ).ForEach({ if($_ -match $n){ $rd = $true; continue; } })
+    ).ForEach({ if($_ -match $n){ $rd = $true } })
     if($rd){
         try {
             $r = Execute-WebRequest -Method HEAD -Uri $n -NO_COOKIE
