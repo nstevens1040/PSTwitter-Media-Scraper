@@ -934,6 +934,15 @@ function Detect-Redirect
             $n | out-file "$($ENV:TWDOWNLOAD)\TWExternalLinks.txt" -encoding ascii -Append
         }
     }
+    $Error.ForEach({
+        $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$(($_ | % Exception).GetType() |% Name).json"
+        $c = 0
+        while([System.IO.File]::Exists($FILE)){
+            $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($c)_$(($_ | % Exception).GetType() |% Name).json"
+            $c++
+        }
+        $_ | select * | ConvertTo-Json | out-File $FILE
+    })
 }
 function Get-TwMediaUris
 {
