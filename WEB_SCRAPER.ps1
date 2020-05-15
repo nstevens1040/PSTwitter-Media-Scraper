@@ -1298,20 +1298,20 @@ Function Scrape-Page
     $FINDMEDIA = @()
     $JSON = $TWEETS.ResponseText | ConvertFrom-Json
     $TWTS = $JSON | % globalObjects | % tweets
-    $TWTSALL = @($JSON | % globalObjects | % tweets | gm -MemberType NoteProperty).Length
-    $TWTSC = 0
+    #$TWTSALL = @($JSON | % globalObjects | % tweets | gm -MemberType NoteProperty).Length
+    #$TWTSALL = @($TWTS | gm -MemberType NoteProperty | % Name).Count
+    #$TWTSC = 0
     $ex = @()
     $bwstart = [Console]::BufferWidth
     [console]::bufferWidth = [Console]::WindowWidth
-    $TWTS | gm -MemberType NoteProperty | % Name | % {
-        $TWTSC++
+    for($i = 0; $i < @($TWTS | gm -MemberType NoteProperty | % Name).Count; $i++){
         Remove-Variable TID,TWEETOBJECT -ea 0
-        $TID = $_
+        $TID = @($TWTS | gm -MemberType NoteProperty | % Name)[$i]
         $TWEETOBJECT = $TWTS | % $TID
         if(!(Get-TwMediaUris -TWEETOBJECT $TWEETOBJECT)){
             $FINDMEDIA += $TWEETOBJECT
         }
-        Write-Progress -PercentComplete ($TWTSC/$TWTSALL*100) -Status "$([math]::Round(($TWTSC/$TWTSALL*100),2))%" -Activity "$($GLOBAL:LINKS.Count) links parsed :: $($TWTSC) of $($TWTSALL) tweets checked"
+        Write-Progress -PercentComplete ($i/@($TWTS | gm -MemberType NoteProperty | % Name).Count*100) -Status "$([math]::Round(($i/@($TWTS | gm -MemberType NoteProperty | % Name).Count*100),2))%" -Activity "$($GLOBAL:LINKS.Count) links parsed :: $($i) of $(@($TWTS | gm -MemberType NoteProperty | % Name).Count) tweets checked"
     }
     $START = Get-Date
     $COUNT = 0
