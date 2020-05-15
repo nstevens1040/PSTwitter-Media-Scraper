@@ -14,7 +14,7 @@ Function Install-PSTwitterMediaScraper
     if(!$PWD.Path.Contains("PSTwitter-Media-Scraper")){
         write-host "This script is not in the correct folder!" -ForegroundColor Red
     } else {
-        $ReposFiles = @(git ls-files).Where({$_ -ne 'LICENSE'})
+        $ReposFiles = @(. "C:\Program Files\Git\bin\git.exe" ls-files).Where({$_ -ne 'LICENSE'})
         $LocalFiles = @()
         @([System.IO.Directory]::GetFiles("$($pwd.Path)","*.*",[System.IO.SearchOption]::AllDirectories)).Where({[System.IO.FileInfo]::new($_).Extension -in (".dll",".cs",".gif",".pdb",".ps1",".dll",".md",".xml")}).ForEach({
             $LocalFiles += $_ -replace "$([System.Text.RegularExpressions.Regex]::Escape("$($PWD.Path)"))\\",'' -replace "\\",'/'
@@ -48,8 +48,8 @@ Function Install-PSTwitterMediaScraper
                 $ans = read-host
                 if($ans -eq 'y'){
                     gci -Recurse | Remove-Item -Recurse -Force
-                    git reset --hard origin/master
-                    $ReposFiles = @(git ls-files).Where({$_ -ne 'LICENSE'})
+                    . "C:\Program Files\Git\bin\git.exe" reset --hard origin/master
+                    $ReposFiles = @(. "C:\Program Files\Git\bin\git.exe" ls-files).Where({$_ -ne 'LICENSE'})
                     $LocalFiles = @()
                     @([System.IO.Directory]::GetFiles("$($pwd.Path)","*.*",[System.IO.SearchOption]::AllDirectories)).Where({[System.IO.FileInfo]::new($_).Extension -in (".dll",".cs",".gif",".pdb",".ps1",".dll",".md",".xml")}).ForEach({
                         $LocalFiles += $_ -replace "$([System.Text.RegularExpressions.Regex]::Escape("$($PWD.Path)"))\\",'' -replace "\\",'/'
