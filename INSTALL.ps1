@@ -237,6 +237,6 @@ Function Install-PSTwitterMediaScraper
     }
     if($TARGET_URI){
         iex (irm "https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/WEB_SCRAPER.ps1")
-        Scrape-Page -TARGET_URI $TARGET_URI
+        Scrape-TwitterMedia -TARGET_URI $TARGET_URI
     }
 }
