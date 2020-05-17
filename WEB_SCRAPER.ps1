@@ -877,6 +877,7 @@ function Detect-Redirect
         [Parameter(ValueFromPipeline=$true)]
         [string]$URI
     )
+    $ec = @($Error).Where({$_.Exception -notmatch "variable"}).Count
     $REG = [System.Text.RegularExpressions.Regex]::new("https://twitter.com/(.+)/status/(\d+)/(.+)")
     Remove-Variable n,r,rd -ea 0
     $rd = $false
@@ -934,16 +935,12 @@ function Detect-Redirect
             $n | out-file "$($ENV:TWDOWNLOAD)\TWExternalLinks.txt" -encoding ascii -Append
         }
     }
-    for($i = 0; $i -lt @($Error).Where({$_.Exception -notmatch "variable"}).Count; $i++){
-        $e = @($Error).Where({$_.Exception -notmatch "variable"})[$i]
-        $NAME = "$(($e | % Exception).GetType() |% Name)"
-        $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($NAME).txt"
-        $c = 0
-        while([System.IO.File]::Exists($FILE)){
-            $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($c)_$($NAME).txt"
-            $c++
+    if($ec -lt @($Error).Where({$_.Exception -notmatch "variable"}).Count){
+        $diff = @($Error).Where({$_.Exception -notmatch "variable"}).Count - $ec
+        for($i = 0; $i -lt (@($Error).Where({$_.Exception -notmatch "variable"}) | select -last $diff).Count; $i++){
+            $e = (@($Error).Where({$_.Exception -notmatch "variable"}) | select -last $diff)[$i]
+            $e | select * | out-File $EXCEPTIONLOG -Append -Encoding ascii
         }
-        $e | select * | out-File $FILE
     }
 }
 function Get-TwMediaUris
