@@ -937,13 +937,13 @@ function Detect-Redirect
     for($i = 0; $i -lt @($Error).Where({$_.Exception -notmatch "variable"}).Count; $i++){
         $e = @($Error).Where({$_.Exception -notmatch "variable"})[$i]
         $NAME = "$(($e | % Exception).GetType() |% Name)"
-        $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($NAME).json"
+        $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($NAME).txt"
         $c = 0
         while([System.IO.File]::Exists($FILE)){
-            $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($c)_$($NAME).json"
+            $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($c)_$($NAME).txt"
             $c++
         }
-        $e | select * | ConvertTo-Json | out-File $FILE
+        $e | select * | out-File $FILE
     }
 }
 function Get-TwMediaUris
@@ -1359,4 +1359,3 @@ Function Scrape-TwitterMedia
     })
     [Console]::BufferWidth = $bwstart
 }
-
