@@ -934,18 +934,16 @@ function Detect-Redirect
             $n | out-file "$($ENV:TWDOWNLOAD)\TWExternalLinks.txt" -encoding ascii -Append
         }
     }
-    for($i = 0; $i -lt $Error.Length; $i++){
-        if($Error[$i].Exception -notmatch 'variable'){
-            $e = $Error[$i]
-            $NAME = "$(($e | % Exception).GetType() |% Name)"
-            $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($NAME).json"
-            $c = 0
-            while([System.IO.File]::Exists($FILE)){
-                $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($c)_$($NAME).json"
-                $c++
-            }
-            $e | select * | ConvertTo-Json | out-File $FILE
+    for($i = 0; $i -lt @($Error).Where({$_.Exception -notmatch "variable"}).Count; $i++){
+        $e = @($Error).Where({$_.Exception -notmatch "variable"})[$i]
+        $NAME = "$(($e | % Exception).GetType() |% Name)"
+        $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($NAME).json"
+        $c = 0
+        while([System.IO.File]::Exists($FILE)){
+            $FILE = "$([System.Environment]::GetEnvironmentVariable("TWBINROOT","MACHINE"))\$($c)_$($NAME).json"
+            $c++
         }
+        $e | select * | ConvertTo-Json | out-File $FILE
     }
 }
 function Get-TwMediaUris
@@ -1361,3 +1359,4 @@ Function Scrape-TwitterMedia
     })
     [Console]::BufferWidth = $bwstart
 }
+
