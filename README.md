@@ -32,7 +32,7 @@ mkdir C:\TEMP\BIN -ea 0
 cd C:\TEMP\BIN 
 git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git 
 cd PowerShell-Twitter-web-scraper 
-.\PSTwitter-Media-Scraper.ps1
+. .\PSTwitter-Media-Scraper.ps1
 ```  
 This will make the function **Scrape-TWPage** available in your current PowerShell session.
 
