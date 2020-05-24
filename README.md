@@ -38,7 +38,7 @@ This will make the function **Scrape-TWPage** available in your current PowerShe
 
 ## Usage  
 
-1.  **Scrape-TWPage** takes one argument called **-TARGET_URI**.  
+1.  **Scrape-TWPage** takes one argument called **-TARGET_URI**. This is the Uri that takes you to the Twitter page that you would like to scrape the media off of.  
 
     **SYNTAX:**   Scrape-TWPage [[-TARGET_URI] &lt;string&gt;]  [&lt;CommonParameters&gt;]  
 
