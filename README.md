@@ -24,25 +24,25 @@
 
 *   A Twitter page that you would like to srape the media off of
 
-## Usage
+## Installation  
 
-1.  Launch PowerShell as administrator and run the code below:
+*   **Launch PowerShell and run the code below:
 
-    <pre><code>mkdir C:\TEMP\BIN
-    cd C:\TEMP\BIN 
-    git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git 
-    cd PowerShell-Twitter-web-scraper 
-    .\Create-DesktopShortcut.ps1 
-    exit</code></pre>
-2.  There should now be a shortcut named **Twitter Media Scraper** on your desktop. Double click the shortcut.
+```ps1
+mkdir C:\TEMP\BIN
+cd C:\TEMP\BIN 
+git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git 
+cd PowerShell-Twitter-web-scraper 
+.\PSTwitter-Media-Scraper.ps1
+```  
+This will make the function **Scrape-TWPage** available in your current PowerShell session.
 
-3.  You will be asked if you have a secondary bearer token to use just in case you hit a rate limit.  
-    If you do not have another bearer token, then click **No**.  
-    If you do, then click **Yes** and enter your secondary bearer token.
+## Usage  
 
-4.  An input box appears. Enter the **full URL to the Twitter page** that you want to scrape all the media off of.
+1.  **Scrape-TWPage** takes one argument called **-TARGET_URI**. 
+    Scrape-TWPage [[-TARGET_URI] <string>]  [<CommonParameters>]  
 
-5.  A Windows credential dialog appears, asking you to enter the **username** and **password** that you use to login to Twitter.  
+2.  A Windows credential dialog appears, asking you to enter the **username** and **password** that you use to login to Twitter.  
 
     **Your username, password, bearer tokens, and csrf tokens are protected with the [System.Security.Cryptography.ProtectedData](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?view=netframework-4.8) .NET Framework class which provides access to Microsoft's Data Protection API.**
 
