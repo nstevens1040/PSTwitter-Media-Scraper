@@ -29,7 +29,7 @@
 *   **Launch PowerShell and run the code below:
 
 ```ps1
-mkdir C:\TEMP\BIN
+mkdir C:\TEMP\BIN -ea 0
 cd C:\TEMP\BIN 
 git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git 
 cd PowerShell-Twitter-web-scraper 
