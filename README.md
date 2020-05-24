@@ -40,7 +40,7 @@ This will make the function **Scrape-TWPage** available in your current PowerShe
 
 1.  **Scrape-TWPage** takes one argument called **-TARGET_URI**.  
 
-*  Scrape-TWPage [[-TARGET_URI] &lt;string&gt;]  [&lt;CommonParameters&gt;]  
+  SYNTAX: Scrape-TWPage [[-TARGET_URI] &lt;string&gt;]  [&lt;CommonParameters&gt;]  
 
 2.  A Windows credential dialog appears, asking you to enter the **username** and **password** that you use to login to Twitter.  
 
