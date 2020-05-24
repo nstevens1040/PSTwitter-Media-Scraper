@@ -26,8 +26,7 @@
 
 ## Installation  
 
-*   **Launch PowerShell and run the code below:
-
+*   **Launch PowerShell and run the code below:**  
 ```ps1
 mkdir C:\TEMP\BIN -ea 0
 cd C:\TEMP\BIN 
