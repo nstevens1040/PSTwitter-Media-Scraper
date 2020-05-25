@@ -16,7 +16,7 @@ Function Scrape-TWPage
         $REG = [System.Text.RegularExpressions.Regex]::new("https://twitter.com/(.+)/status/(\d+)/(.+)")
         Remove-Variable n,r,rd,u -ea 0
         $rd = $false
-        $n = $URI -replace "\)$",'' -replace "\*","\*"
+        $n = $URI -replace "\)",'' -replace "\*","\*"
         try {
             $u = [uri]::New($n)
         }
