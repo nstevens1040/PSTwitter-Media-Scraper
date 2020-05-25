@@ -38,7 +38,7 @@ Function Scrape-TWPage
             [Parameter(ValueFromPipeline=$true)]
             [string]$URI
         )
-        $ec = @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}).Count
+        $ec = @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "System.Uri"}).Count
         $REG = [System.Text.RegularExpressions.Regex]::new("https://twitter.com/(.+)/status/(\d+)/(.+)")
         Remove-Variable n,r,rd,u -ea 0
         $rd = $false
@@ -59,11 +59,7 @@ Function Scrape-TWPage
                 try {
                     $r = Execute-WebRequest -Method HEAD -Uri $n -NO_COOKIE -SILENT
                 }
-                catch {
-                    $e = $_
-                    "HTTP HEAD request failed for $($n)" | Out-File $EXCEPTIONLOG -Encoding ascii -Append
-                    $e.Exception | % { $_ | Out-File $EXCEPTIONLOG -Encoding ascii -Append }
-                }
+                catch { }
                 if($r){
                     $redi = $r.HttpResponseMessage.Result.RequestMessage.RequestUri.AbsoluteUri
                     if($redi -ne $n){
@@ -101,10 +97,10 @@ Function Scrape-TWPage
                     $n | out-file $GLOBAL:EXTERNALLOG -encoding ascii -Append
                 }
             }
-            if($ec -lt @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}).Count){
-                $diff = @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}).Count - $ec
-                for($i = 0; $i -lt (@($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}) | select -last $diff).Count; $i++){
-                    $e = (@($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}) | select -last $diff)[$i]
+            if($ec -lt @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "System.Uri"}).Count){
+                $diff = @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "System.Uri"}).Count - $ec
+                for($i = 0; $i -lt (@($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "System.Uri"}) | select -last $diff).Count; $i++){
+                    $e = (@($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "System.Uri"}) | select -last $diff)[$i]
                     $e | select * | out-File $GLOBAL:EXCEPTIONLOG -Append -Encoding ascii
                 }
             }
@@ -938,4 +934,3 @@ Function Scrape-TWPage
     })
     [Console]::BufferWidth = $bwstart
 }
-
