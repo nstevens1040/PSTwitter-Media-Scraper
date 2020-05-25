@@ -695,6 +695,7 @@ Function Scrape-TWPage
         })
         return $ROOTF
     }
+    Add-Type -Path "C:\Windows\Microsoft.Net\assembly\GAC_MSIL\Microsoft.VisualBasic\v4.0_10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualBasic.dll"
     if([System.IO.DirectoryInfo]::New("$($PWD.Path)").Name -eq 'PSTwitter-Media-Scraper'){ 
         $TWDOWNLOAD = "$($PWD.Path)"
     } else {
@@ -702,7 +703,7 @@ Function Scrape-TWPage
     }
     if(![System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE")){
         Switch(
-            [microsoft.visualbasic.Interaction]::MsgBox(
+            [Microsoft.VisualBasic.Interaction]::MsgBox(
                 "We'll need to set a download folder.`n`nClick 'Yes' to set environment variable:`n`n`t%TWDOWNLOAD%`nto:`n`t'$($TWDOWNLOAD)'`n`nClick 'No' to set a different download folder.",
                 [Microsoft.VisualBasic.MsgBoxStyle]::YesNo,
                 "TWITTER MEDIA SCRAPER"
@@ -721,7 +722,7 @@ Function Scrape-TWPage
                 $ans = "No"
                 While($ans -eq "No"){
                     $TWDOWNLOAD = SeletCustomFolder
-                    $ans = [microsoft.visualbasic.Interaction]::MsgBox(
+                    $ans = [Microsoft.VisualBasic.Interaction]::MsgBox(
                         "Click 'Yes' to set environment variable:`n`n`t%TWDOWNLOAD%`nto:`n`t'$($TWDOWNLOAD)'`n`nClick 'No' to set a different download folder.",
                         [Microsoft.VisualBasic.MsgBoxStyle]::YesNo,
                         "TWITTER MEDIA SCRAPER"
