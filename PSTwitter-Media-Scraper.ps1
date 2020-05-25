@@ -31,7 +31,7 @@ Function Scrape-TWPage
             ).ForEach({ if($_ -match $n){ $rd = $true } })
             if($rd){
                 try {
-                    $r = Execute-WebRequest -Method HEAD -Uri $n -NO_COOKIE
+                    $r = Execute-WebRequest -Method HEAD -Uri $n -NO_COOKIE -SILENT
                 }
                 catch {
                     $e = $_
