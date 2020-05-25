@@ -98,14 +98,14 @@ Function Scrape-TWPage
                 ){
                     return $n
                 } else {
-                    $n | out-file "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\TWExternalLinks_$(Get-EpochUnixTimeUTC).txt" -encoding ascii -Append
+                    $n | out-file $GLOBAL:EXTERNALLOG -encoding ascii -Append
                 }
             }
             if($ec -lt @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}).Count){
                 $diff = @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}).Count - $ec
                 for($i = 0; $i -lt (@($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}) | select -last $diff).Count; $i++){
                     $e = (@($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}) | select -last $diff)[$i]
-                    $e | select * | out-File $EXCEPTIONLOG -Append -Encoding ascii
+                    $e | select * | out-File $GLOBAL:EXCEPTIONLOG -Append -Encoding ascii
                 }
             }
         }
@@ -868,8 +868,9 @@ Function Scrape-TWPage
     $uJSON = $USER.ResponseText | ConvertFrom-Json
     $rTWID = $uJSON | % id
     $epochtime = Get-EpochUnixTimeUTC
-    $EXCEPTIONLOG = "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\Exceptions_$($EpochTime).txt"
-    $DLLINKLOG = "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\Download_Links_$($EpochTime).txt"
+    $GLOBAL:EXCEPTIONLOG = "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\Exceptions_$($EpochTime).txt"
+    $GLOBAL:DLLINKLOG = "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\Download_Links_$($EpochTime).txt"
+    $GLOBAL:EXTERNALLOG = "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\TWExternalLinks_$($EpochTime).txt"
     if($TARGET_URI.Contains("likes")){
         $MEDIA_COUNT = $uJSON | % favourites_count
         $URI = "https://api.twitter.com/2/timeline/favorites/$($rTWID).json?include_profile_interstitial_type=1&include_blocking=1&include_blocked_by=1&include_followed_by=1&include_want_retweets=1&include_mute_edge=1&include_can_dm=1&include_can_media_tag=1&skip_status=1&cards_platform=Web-12&include_cards=1&include_composer_source=true&include_ext_alt_text=true&include_reply_count=1&tweet_mode=extended&include_entities=true&include_user_entities=true&include_ext_media_color=true&include_ext_media_availability=true&send_error_codes=true&simple_quoted_tweets=true&count=$($MEDIA_COUNT)&ext=mediaStats%2CcameraMoment"
