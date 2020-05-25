@@ -61,7 +61,6 @@ Function Scrape-TWPage
                 }
                 catch {
                     $e = $_
-                    Write-Host $n
                     "HTTP HEAD request failed for $($n)" | Out-File $EXCEPTIONLOG -Encoding ascii -Append
                     $e.Exception | % { $_ | Out-File $EXCEPTIONLOG -Encoding ascii -Append }
                 }
