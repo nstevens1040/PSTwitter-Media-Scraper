@@ -700,10 +700,10 @@ Function Scrape-TWPage
     } else {
         $TWDOWNLOAD = "C:\TEMP\BIN\PSTwitter-Media-Scraper"
     }
-    if([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE")){ } else {
+    if(![System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE")){
         Switch(
             [microsoft.visualbasic.Interaction]::MsgBox(
-                "Now we'll need to set a download folder.`n`nClick 'Yes' to set environment variable:`n`n`t%TWDOWNLOAD%`nto:`n`t'$($TWDOWNLOAD)'`n`nClick 'No' to set a different download folder.",
+                "We'll need to set a download folder.`n`nClick 'Yes' to set environment variable:`n`n`t%TWDOWNLOAD%`nto:`n`t'$($TWDOWNLOAD)'`n`nClick 'No' to set a different download folder.",
                 [Microsoft.VisualBasic.MsgBoxStyle]::YesNo,
                 "TWITTER MEDIA SCRAPER"
             )
