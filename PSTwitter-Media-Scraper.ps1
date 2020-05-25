@@ -598,7 +598,7 @@ Function Scrape-TWPage
             $H.Add("accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
             $H.Add("authorization","Bearer $($BEARER_TOKEN)")
             $WEBCLIENT.Headers = $H
-            $FILE = "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\VID\$(($videoUrl.Split('/')[-1]).split('?')[0])"
+            $FILE = "$($TWROOT)\VID\$(($videoUrl.Split('/')[-1]).split('?')[0])"
             $ENCODED = "$($TWROOT)\VID\ENCODED\$(($VIDEOURL.Split('/')[-1]).split('?')[0])"
             $WEBCLIENT.Proxy = $null
             try {
@@ -938,3 +938,4 @@ Function Scrape-TWPage
     })
     [Console]::BufferWidth = $bwstart
 }
+
