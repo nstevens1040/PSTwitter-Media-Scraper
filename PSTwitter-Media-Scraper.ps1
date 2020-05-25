@@ -5,6 +5,31 @@ Function Scrape-TWPage
         [string]$TARGET_URI
     )
     iex (irm "https://raw.githubusercontent.com/nstevens1040/Execute-WebRequest/master/INSTALL.ps1")
+    Function SeletCustomFolder
+    {
+        Add-Type -AssemblyName System.Windows.Forms
+        $PICKER = [System.Windows.Forms.FolderBrowserDialog]::new()
+        $PICKER.RootFolder = "Desktop"
+        $PICKER.ShowNewFolderButton = $true
+        $null = $PICKER.ShowDialog()
+        return "$($PICKER.SelectedPath)"
+    }
+    Function SetEnvVarFolder
+    {
+        Param(
+            [string]$FOLDER,
+            [string]$VARIABLE_NAME
+        )
+        if(![System.IO.Directory]::Exists($FOLDER)){ $null = [System.IO.Directory]::CreateDirectory($FOLDER) }
+        $null = ([System.Diagnostics.Process]@{
+            StartInfo = [System.Diagnostics.ProcessStartInfo]@{
+                FileName = "$($PSHOME)\PowerShell.exe";
+                Arguments = " -WindowStyle Hidden -noprofile -nologo -ep RemoteSigned -c [System.Environment]::SetEnvironmentVariable('$($VARIABLE_NAME)','$($FOLDER)','MACHINE')";
+                Verb = "RunAs";
+                WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden;
+            }
+        }).Start()
+    }
     function Detect-Redirect
     {
         [cmdletbinding()]
@@ -73,7 +98,7 @@ Function Scrape-TWPage
                 ){
                     return $n
                 } else {
-                    $n | out-file "$($ENV:TWDOWNLOAD)\TWExternalLinks.txt" -encoding ascii -Append
+                    $n | out-file "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\TWExternalLinks_$(Get-EpochUnixTimeUTC).txt" -encoding ascii -Append
                 }
             }
             if($ec -lt @($Error).Where({$_.Exception -notmatch "variable" -and $_.Exception -notmatch "The format of the URI"}).Count){
@@ -573,7 +598,7 @@ Function Scrape-TWPage
             $H.Add("accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
             $H.Add("authorization","Bearer $($BEARER_TOKEN)")
             $WEBCLIENT.Headers = $H
-            $FILE = "$($TWROOT)\VID\$(($videoUrl.Split('/')[-1]).split('?')[0])"
+            $FILE = "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\VID\$(($videoUrl.Split('/')[-1]).split('?')[0])"
             $ENCODED = "$($TWROOT)\VID\ENCODED\$(($VIDEOURL.Split('/')[-1]).split('?')[0])"
             $WEBCLIENT.Proxy = $null
             try {
@@ -651,7 +676,7 @@ Function Scrape-TWPage
         param(
             [string]$LINK
         )
-        $ROOTF = "$($ENV:TWDOWNLOAD)\$([dateTime]::Now.ToString('u').split(' ')[0])\$($LINK.split('/')[3])"
+        $ROOTF = "$([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE"))\$([dateTime]::Now.ToString('u').split(' ')[0])\$($LINK.split('/')[3])"
         @(
             $ROOTF,
             "$($ROOTF)\VID\",
@@ -668,6 +693,47 @@ Function Scrape-TWPage
             }
         })
         return $ROOTF
+    }
+    if([System.IO.DirectoryInfo]::New("$($PWD.Path)").Name -eq 'PSTwitter-Media-Scraper'){ 
+        $TWDOWNLOAD = "$($PWD.Path)"
+    } else {
+        $TWDOWNLOAD = "C:\TEMP\BIN\PSTwitter-Media-Scraper"
+    }
+    if([System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE")){ } else {
+        Switch(
+            [microsoft.visualbasic.Interaction]::MsgBox(
+                "Now we'll need to set a download folder.`n`nClick 'Yes' to set environment variable:`n`n`t%TWDOWNLOAD%`nto:`n`t'$($TWDOWNLOAD)'`n`nClick 'No' to set a different download folder.",
+                [Microsoft.VisualBasic.MsgBoxStyle]::YesNo,
+                "TWITTER MEDIA SCRAPER"
+            )
+        ){
+            "Yes" {
+                if(![System.IO.Directory]::Exists($TWDOWNLOAD)){
+                    $null = [System.IO.Directory]::CreateDirectory($TWDOWNLOAD)
+                }
+                While(![System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE")){
+                    SetEnvVarFolder -FOLDER $TWDOWNLOAD -VARIABLE_NAME 'TWDOWNLOAD'
+                    sleep -s 1
+                }
+            }
+            "No" {
+                $ans = "No"
+                While($ans -eq "No"){
+                    $TWDOWNLOAD = SeletCustomFolder
+                    $ans = [microsoft.visualbasic.Interaction]::MsgBox(
+                        "Click 'Yes' to set environment variable:`n`n`t%TWDOWNLOAD%`nto:`n`t'$($TWDOWNLOAD)'`n`nClick 'No' to set a different download folder.",
+                        [Microsoft.VisualBasic.MsgBoxStyle]::YesNo,
+                        "TWITTER MEDIA SCRAPER"
+                    )
+                }
+                if($ans -eq "Yes"){
+                    While(![System.Environment]::GetEnvironmentVariable("TWDOWNLOAD","MACHINE")){
+                        SetEnvVarFolder -FOLDER $TWDOWNLOAD -VARIABLE_NAME 'TWDOWNLOAD'
+                        sleep -s 1
+                    }
+                }
+            }
+        }
     }
     $INPUTDIALOG_REFS = @(
         "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Windows.Forms\v4.0_4.0.0.0__b77a5c561934e089\System.Windows.Forms.dll",
