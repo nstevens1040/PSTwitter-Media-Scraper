@@ -34,7 +34,11 @@ git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git
 cd PowerShell-Twitter-web-scraper 
 . .\PSTwitter-Media-Scraper.ps1
 ```  
-This will make the function **Scrape-TWPage** available in your current PowerShell session.
+*   **You can also launch PowerShell and run:**  
+```ps1
+iex (irm "https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/PSTwitter-Media-Scraper.ps1")
+```  
+Either one will make the function **Scrape-TWPage** available in your current PowerShell session.
 
 ## Usage  
 
