@@ -5,6 +5,7 @@ Function Scrape-TWPage
         [string]$TARGET_URI
     )
     iex (irm "https://raw.githubusercontent.com/nstevens1040/Execute-WebRequest/master/INSTALL.ps1")
+    iex (irm "https://raw.githubusercontent.com/nstevens1040/Load-MissingAssembly/master/Load-MissingAssembly.ps1")
     Function SeletCustomFolder
     {
         Add-Type -AssemblyName System.Windows.Forms
