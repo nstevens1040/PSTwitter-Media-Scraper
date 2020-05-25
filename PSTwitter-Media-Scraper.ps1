@@ -737,7 +737,7 @@ Function Scrape-TWPage
         }
     }
     if(!("System.Security.Cryptography.ProtectedData" -as [type])){
-        $DLL = Load-MissingAssembly -AssemblyName "System.Security.Cryptography.ProtectedData"
+        $DLL = Load-MissingAssembly -AssemblyName "System.Security.Cryptography.ProtectedData" -Environment "TWDOWNLOAD"
         if($DLL){
             if($DLL.GetType() -eq [object[]]){ $DLL = $DLL[-1] }
             Add-Type -Path $DLL
