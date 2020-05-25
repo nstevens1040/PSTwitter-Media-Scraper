@@ -735,6 +735,15 @@ Function Scrape-TWPage
             }
         }
     }
+    if(!("System.Security.Cryptography.ProtectedData" -as [type])){
+        $DLL = Load-MissingAssembly -AssemblyName "System.Security.Cryptography.ProtectedData"
+        if($DLL){
+            if($DLL.GetType() -eq [object[]]){ $DLL = $DLL[-1] }
+            Add-Type -Path $DLL
+            if($? -and [array]::IndexOf(@([System.IO.File]::ReadAllLines($PROFILE)),"Add-Type -Path `"$($DLL)`"") -eq -1){ "`nAdd-Type -Path `"$($DLL)`"" | Out-File $PROFILE -Encoding Ascii -Append }
+            remove-variable DLL -ea 0
+        }
+    }
     $INPUTDIALOG_REFS = @(
         "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Windows.Forms\v4.0_4.0.0.0__b77a5c561934e089\System.Windows.Forms.dll",
         "C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Drawing\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll",
