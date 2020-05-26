@@ -732,6 +732,14 @@ Function Scrape-TWPage
             }
         }
     }
+    $CR = [System.Text.RegularExpressions.Regex]::New("$([char]13)")
+    $LF = [System.Text.RegularExpressions.Regex]::New("$([char]10)")
+    if(![System.IO.Directory]::Exists([System.IO.FileInfo]::New($PROFILE).Directory.FullName)){
+        $null = [System.IO.Directory]::CreateDirectory([System.IO.FileInfo]::New($PROFILE).Directory.FullName)
+    }
+    if(![System.IO.File]::Exists($PROFILE)){
+        "" | Out-File $PROFILE -Encoding Ascii
+    }
     if(!("System.Security.Cryptography.ProtectedData" -as [type])){
         $DLL = Load-MissingAssembly -AssemblyName "System.Security.Cryptography.ProtectedData" -Environment "TWDOWNLOAD"
         if($DLL){
@@ -934,3 +942,27 @@ Function Scrape-TWPage
     })
     [Console]::BufferWidth = $bwstart
 }
+$CR = [System.Text.RegularExpressions.Regex]::New("$([char]13)")
+$LF = [System.Text.RegularExpressions.Regex]::New("$([char]10)")
+if(![System.IO.Directory]::Exists([System.IO.FileInfo]::New($PROFILE).Directory.FullName)){
+    $null = [System.IO.Directory]::CreateDirectory([System.IO.FileInfo]::New($PROFILE).Directory.FullName)
+}
+if(![System.IO.File]::Exists($PROFILE)){
+    "" | Out-File $PROFILE -Encoding Ascii
+}
+if("Function Scrape-TWPage" -in @([System.IO.File]::ReadAllLines($PROFILE))){
+    [Int32]$sindex = [array]::IndexOf([System.IO.File]::ReadAllLines($PROFILE),"Function Scrape-TWPage")
+    [Int32]$eindex = [array]::IndexOf(
+        @([System.IO.File]::ReadAllLines($PROFILE)[$sindex..(@([System.IO.File]::ReadAllLines($PROFILE)).Count)]),
+        @([System.IO.File]::ReadAllLines($PROFILE)[$sindex..(@([System.IO.File]::ReadAllLines($PROFILE)).Count)]).Where({$_ -match "^}$"})[0]
+    )
+    $Remove_Stp = @()
+    @([System.IO.File]::ReadAllLines($PROFILE))[0..($sindex - 1)].forEach({ $Remove_Stp += $_  })
+    @([System.IO.File]::ReadAllLines($PROFILE))[($sindex + $eindex + 1)..(@([System.IO.File]::ReadAllLines($PROFILE)).Count)].forEach({ $Remove_Stp += $_ })
+    "" | Out-File $PROFILE -Encoding ascii
+    $Remove_Stp -join "`n"  | Out-File $PROFILE -Encoding ascii -Append
+}
+$LF.Replace($CR.Replace("Function Scrape-TWPage",''),'') | Out-File $PROFILE -Encoding ascii -Append
+$LF.Replace($CR.Replace("{",''),'') | Out-File $PROFILE -Encoding ascii -Append
+"$(Get-Command Scrape-TWPage | % ScriptBlock)" | Out-File $PROFILE -Encoding ascii -Append
+$LF.Replace($CR.Replace("}",''),'') | Out-File $PROFILE -Encoding ascii -Append
