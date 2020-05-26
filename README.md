@@ -44,7 +44,7 @@ Either one will make the function **Scrape-TWPage** available in your current Po
   
 ![ScreenShot](https://github.com/nstevens1040/PSTwitter-Media-Scraper/raw/master/.gitignore/Capture1.PNG)  
   
-2.  **EXWEBREQ** : Points to a root folder to store any .NET assemblies necessary to use **Execute-WebRequest**.  
+2.  **EXWEBREQ** : Points to a root folder to store any .NET assemblies necessary to use [Execute-WebRequest](https://github.com/nstevens1040/Execute-WebRequest).  
   
 ![ScreenShot](https://github.com/nstevens1040/PSTwitter-Media-Scraper/raw/master/.gitignore/Capture2.PNG)  
   
