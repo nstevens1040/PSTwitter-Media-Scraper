@@ -31,7 +31,7 @@
 mkdir C:\TEMP\BIN -ea 0
 cd C:\TEMP\BIN 
 git clone https://github.com/nstevens1040/PSTwitter-Media-Scraper.git 
-cd PowerShell-Twitter-web-scraper 
+cd PSTwitter-Media-Scraper 
 . .\PSTwitter-Media-Scraper.ps1
 ```  
 *   **You can also launch PowerShell and run:**  
