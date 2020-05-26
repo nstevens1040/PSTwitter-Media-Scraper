@@ -41,9 +41,13 @@ iex (irm "https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper
 Either one will make the function **Scrape-TWPage** available in your current PowerShell session.  
 *   The first time you run **Scrape-TWPage** you will be asked to set two environment variables:  
 1.  **TWDOWNLOAD** : Points to a root folder to store all of your download images and videos.  
+  
 ![ScreenShot](https://github.com/nstevens1040/PSTwitter-Media-Scraper/raw/master/.gitignore/Capture1.PNG)  
+  
 2.  **EXWEBREQ** : Points to a root folder to store any .NET assemblies necessary to use **Execute-WebRequest**.  
+  
 ![ScreenShot](https://github.com/nstevens1040/PSTwitter-Media-Scraper/raw/master/.gitignore/Capture2.PNG)  
+  
 ## Usage  
 
 1.  **Scrape-TWPage** takes one argument called **-TARGET_URI**. This is the Uri that takes you to the Twitter page that you would like to scrape the media off of.  
