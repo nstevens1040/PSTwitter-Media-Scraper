@@ -8,8 +8,7 @@
                                                                                     |_|                
   
 
-[Click here to view this page in HTML instead of markdown](https://nanick.hopto.org/twreadme.html)
-## Under Construction Again! Some of the instruction below may not reflect how this solution is intended to be used!
+[Click here to view this page in HTML instead of markdown](https://nanick.hopto.org/twreadme.html)  
 ## Requirements
 
 *   **Microsoft Windows** operating system
