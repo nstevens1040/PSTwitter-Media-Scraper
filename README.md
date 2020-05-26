@@ -39,7 +39,8 @@ cd PowerShell-Twitter-web-scraper
 iex (irm "https://raw.githubusercontent.com/nstevens1040/PSTwitter-Media-Scraper/master/PSTwitter-Media-Scraper.ps1")
 ```  
 Either one will make the function **Scrape-TWPage** available in your current PowerShell session.  
-*   The first time you run **Scrape-TWPage** you will be asked to set two environment variables:  
+## Environment Variables  
+   The first time you run **Scrape-TWPage** you will be asked to set two environment variables:  
 1.  **TWDOWNLOAD** : Points to a root folder to store all of your download images and videos.  
   
 ![ScreenShot](https://github.com/nstevens1040/PSTwitter-Media-Scraper/raw/master/.gitignore/Capture1.PNG)  
