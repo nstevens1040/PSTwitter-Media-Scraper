@@ -30,7 +30,7 @@
 ```ps1
 mkdir C:\TEMP\BIN -ea 0
 cd C:\TEMP\BIN 
-git clone https://github.com/nstevens1040/PowerShell-Twitter-web-scraper.git 
+git clone https://github.com/nstevens1040/PSTwitter-Media-Scraper.git 
 cd PowerShell-Twitter-web-scraper 
 . .\PSTwitter-Media-Scraper.ps1
 ```  
