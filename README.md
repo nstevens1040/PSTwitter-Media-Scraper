@@ -8,7 +8,7 @@
                                                                                     |_|                
   
 
-[Click here to view this page in HTML instead of markdown](https://nanick.hopto.org/twreadme.html)  
+[Click here to view this page in HTML instead of markdown](https://nstevens1040.github.io/PSTwitter-Media-Scraper/)  
 ## Requirements
 
 *   **Microsoft Windows** operating system
