@@ -361,9 +361,21 @@ Function Scrape-TWPage
         
             $CK1 = '{ "Comment": "", "CommentUri": null, "HttpOnly": false, "Discard": false, "Domain": "twitter.com", "Expired": false, "Expires": "\/Date(-62135575200000)\/", "Name": "app_shell_visited", "Path": "/", "Port": "", "Secure": false, "TimeStamp": "\/Date(1578913791674)\/", "Value": "1", "Version": 0}'
             $CK2 = '{ "Comment": "", "CommentUri": null, "HttpOnly": false, "Discard": false, "Domain": ".twitter.com", "Expired": true, "Expires": "\/Date(1578913611000)\/", "Name": "fm", "Path": "/", "Port": "", "Secure": false, "TimeStamp": "\/Date(1578913791689)\/", "Value": "0", "Version": 0}'
-        
-            $LOGIN = Execute-WebRequest -METHOD GET -URI "https://mobile.twitter.com/login"
-            $FORMS = @(); @($LOGIN.HtmlDocument.getElementsByTagName("FORM")).ForEach({ $FORMS += $_ })
+            
+            $NOJS = Execute-WebRequest -METHOD POST `
+            -URI "https://mobile.twitter.com/i/nojs_router?path=%2Flogin" `
+            -CONTENT_TYPE "application/x-www-form-urlencoded" `
+            -GET_REDIRECT_URI `
+            -REFERER "https://twitter.com/login"
+
+            $MOBILE = Execute-WebRequest -METHOD GET `
+            -HEADERS $NOJS.HttpResponseHeaders `
+            -DEFAULTCOOKIES $NOJS.CookieCollection `
+            -GET_REDIRECT_URI `
+            -URI $NOJS.RedirectUri
+
+            $FORMS = @(); $FORMS += $MOBILE.HtmlDocument.body.getElementsByTagName("FORM")
+
             $UIMET = Execute-WebRequest -Method GET -Uri "https://twitter.com/i/js_inst?c_name=ui_metrics"
             $EXPIRES = [DateTime]"$("$(@($UIMET.HttpResponseHeaders.Where({$_.Key -eq "Set-Cookie"})[0].Value.Split(';')).Where({$_ -match 'expires'}) | select -First 1)".Split('=')[1])"
             $COOKIE1 = MakeCookie -JSON $CK1
