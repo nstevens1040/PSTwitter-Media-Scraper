@@ -377,7 +377,7 @@ Function Scrape-TWPage
             $SESSION = Execute-WebRequest -Method POST `
                  -ENCRYPTEDBODY $BODY `
                  -Headers $WebHeaderCollection[2] `
-                 -Uri "https://twitter.com/sessions" `
+                 -Uri "https://mobile.twitter.com/sessions" `
                  -CONTENT_TYPE "application/x-www-form-urlencoded" `
                  -DEFAULTCOOKIES $COLLECT
         
