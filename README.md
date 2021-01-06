@@ -63,7 +63,7 @@ At this point, you are finished entering the information necessary to proceed. T
 
 The steps above are illustrated in the video below.
 ![ScreenShot](https://github.com/nstevens1040/PSTwitter-Media-Scraper/raw/master/.gitignore/PSTwitterScraperUsage.gif)
-
-![nstevens1040's github stats](https://github-readme-stats.vercel.app/api?username=nstevens1040&show_icons=true&theme=radical)
-[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=nstevens1040&repo=PSTwitter-Media-Scraper)](https://github.com/nstevens1040/PSTwitter-Media-Scraper)
-
+  
+![nstevens1040's github stats](https://github-readme-stats.vercel.app/api?username=nstevens1040&show_icons=true&theme=radical)  
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=nstevens1040&repo=PSTwitter-Media-Scraper)](https://github.com/nstevens1040/PSTwitter-Media-Scraper)  
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=nstevens1040)](https://github.com/nstevens1040/PSTwitter-Media-Scraper)  
